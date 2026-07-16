@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
-  # Deviseのルートはマージ後に確認して記述
+ devise_for :admins, skip: [ :registrations ]
+ devise_for :customers
 
   namespace :admin do
     root to: "homes#top"
