@@ -23,7 +23,7 @@ class ItemTest < ActiveSupport::TestCase
     )
 
     assert_not item.valid?
-    assert_includes item.errors[:genre], "must exist"
+    assert item.errors.details[:genre].present?
   end
 
   test "商品名がなければ無効である" do
@@ -37,7 +37,7 @@ class ItemTest < ActiveSupport::TestCase
     )
 
     assert_not item.valid?
-    assert_includes item.errors[:name], "can't be blank"
+    assert_equal :blank, item.errors.details[:name].first[:error]
   end
 
   test "商品説明がなければ無効である" do
@@ -51,7 +51,7 @@ class ItemTest < ActiveSupport::TestCase
     )
 
     assert_not item.valid?
-    assert_includes item.errors[:introduction], "can't be blank"
+    assert_equal :blank, item.errors.details[:introduction].first[:error]
   end
 
   test "価格が負数なら無効である" do
@@ -65,7 +65,7 @@ class ItemTest < ActiveSupport::TestCase
     )
 
     assert_not item.valid?
-    assert_includes item.errors[:price], "must be greater than or equal to 0"
+    assert_equal :greater_than_or_equal_to, item.errors.details[:price].first[:error]
   end
 
   test "販売停止状態でも有効である" do

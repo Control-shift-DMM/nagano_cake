@@ -11,6 +11,6 @@ class GenreTest < ActiveSupport::TestCase
     genre = Genre.new(name: "")
 
     assert_not genre.valid?
-    assert_includes genre.errors[:name], "can't be blank"
+    assert_equal :blank, genre.errors.details[:name].first[:error]
   end
 end
