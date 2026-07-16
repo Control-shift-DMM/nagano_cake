@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  namespace :public do
+    get "addresses/index"
+    get "addresses/edit"
+  end
   
  devise_for :admins, skip: [ :registrations ]
  devise_for :customers
