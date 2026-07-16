@@ -62,7 +62,10 @@ Rails.application.configure do
   config.assets.quiet = true
 
   # Raises error for missing translations.
-  # config.i18n.raise_on_missing_translations = true
+  # 翻訳漏れやキーの打ち間違いを見つけるために、翻訳が存在しなかったら例外を発生させる設定
+  config.i18n.raise_on_missing_translations = true
+  # 画像のサイズ変更を行う設定
+  config.active_job.queue_adapter = :inline
 
   # Annotate rendered view with file names.
   config.action_view.annotate_rendered_view_with_filenames = true

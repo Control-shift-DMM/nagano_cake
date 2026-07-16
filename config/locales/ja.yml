@@ -1,6 +1,7 @@
 # enum :payment_method, { credit_card: 0, transfer: 1 }
-# ↑ Orderモデルで定義する予定
-# enum :making_status, { discontinued: 0, waiting_for_creation: 1, in_production:2, conmplete:4 }
+# enum :status, { waiting_for_payment: 0, payment_confirmation: 1 ,in_production:2, preparation:3, shipping:4}
+# ↑ 上記2点Orderモデルで定義する予定
+# enum :making_status, { discontinued: 0, waiting_for_creation: 1, in_production:2, complete:4 }
 # ↑ Order_detailモデルで定義予定
 
 ja:
@@ -9,12 +10,18 @@ ja:
       payment_method:
         credit_card: "クレジットカード" #orderモデルのpayment_methodの値が0の場合クレジットカードと表記
         transfer: "銀行振込" #上に並んで値が1の場合銀行振替と表記
+      status:
+        waiting_for_payment: "入金待ち"
+        payment_confirmation: "入金確認"
+        in_production: "製作中"
+        preparation: "発送準備中"
+        shipping: "発送済み"
     order_detail:
       making_status:
         discontinued: "製作不可"
         waiting_for_creation: "製作待ち"
         in_production: "製作中"
-        conmplete: "製作完了"
+        complete: "製作完了"
 
   activerecord:
     errors:
