@@ -1,13 +1,4 @@
 Rails.application.routes.draw do
-  get "customers/index"
-  get "customers/show"
-  get "customers/edit"
-  get "customers/new"
-  resource :session
-  resources :passwords, param: :token
- devise_for :admins, skip: [ :registrations ]
- devise_for :customers
-
   namespace :admin do
     root to: "homes#top"
 
@@ -22,13 +13,20 @@ Rails.application.routes.draw do
     root to: "homes#top"
     get "about", to: "homes#about"
 
-    resources :items, only: [ :index, :show ]
+    resource :session
+    resources :passwords, param: :token
 
-    get "customers/my_page", to: "customers#show"
-    get "customers/information/edit", to: "customers#edit"
-    patch "customers/information", to: "customers#update"
-    get "customers/unsubscribe", to: "customers#unsubscribe"
-    patch "customers/withdraw", to: "customers#withdraw"
+    resources :customers, only: [:new, :create] do
+      collection do
+        get "my_page", to: "customers#show"
+        get "information/edit", to: "customers#edit"
+        patch "information", to: "customers#update"
+        get "unsubscribe", to: "customers#unsubscribe"
+        patch "withdraw", to: "customers#withdraw"
+      end
+    end
+
+    resources :items, only: [ :index, :show ]
 
     resources :cart_items, only: [ :index, :create, :update, :destroy ] do
       delete :destroy_all, on: :collection
