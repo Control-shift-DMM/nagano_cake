@@ -1,8 +1,3 @@
-# enum :payment_method, { credit_card: 0, transfer: 1 }
-# enum :status, { waiting_for_payment: 0, payment_confirmation: 1 ,in_production:2, preparation:3, shipping:4}
-# ↑ 上記2点Orderモデルで定義する予定
-# enum :making_status, { discontinued: 0, waiting_for_creation: 1, in_production:2, complete:4 }
-# ↑ Order_detailモデルで定義予定
 
 ja:
   enums:
