@@ -1,4 +1,10 @@
 Rails.application.routes.draw do
+  get "orders/new"
+  get "orders/confirm"
+  get "orders/complete"
+  get "orders/create"
+  get "orders/index"
+  get "orders/show"
  devise_for :admins, skip: [ :registrations ]
  devise_for :customers
 
