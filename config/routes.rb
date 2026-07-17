@@ -1,12 +1,16 @@
 Rails.application.routes.draw do
-  get "orders/new"
-  get "orders/confirm"
-  get "orders/complete"
-  get "orders/create"
-  get "orders/index"
-  get "orders/show"
- devise_for :admins, skip: [ :registrations ]
- devise_for :customers
+  devise_for :admins,
+             skip: [ :registrations, :passwords ],
+             controllers: {
+               sessions: "admin/sessions"
+             }
+
+  devise_for :customers,
+             skip: [ :passwords ],
+             controllers: {
+               registrations: "public/registrations",
+               sessions: "public/sessions"
+             }
 
   namespace :admin do
     root to: "homes#top"
