@@ -1,0 +1,64 @@
+<h2>商品一覧</h2>
+
+<p>
+  <%= link_to "商品を新規登録する", new_admin_item_path %>
+</p>
+
+<%= form_with url: admin_items_path, method: :get do |f| %>
+  <div>
+    <%= f.label :keyword, "商品名検索" %>
+    <%= f.text_field :keyword, value: @keyword %>
+    <%= f.submit "検索" %>
+
+    <% if @keyword.present? %>
+      <%= link_to "検索を解除", admin_items_path %>
+    <% end %>
+  </div>
+<% end %>
+
+<table>
+  <thead>
+    <tr>
+      <th>商品ID</th>
+      <th>商品画像</th>
+      <th>商品名</th>
+      <th>税抜価格</th>
+      <th>ジャンル</th>
+      <th>販売ステータス</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @items.each do |item| %>
+      <tr>
+        <td><%= item.id %></td>
+
+        <td>
+          <% if item.image.attached? %>
+            <%= image_tag item.image, size: "80x80" %>
+          <% else %>
+            <%= image_tag "default-image.jpg", size: "80x80" %>
+          <% end %>
+        </td>
+
+        <td>
+          <%= link_to item.name, admin_item_path(item) %>
+        </td>
+
+        <td>
+          <%= number_with_delimiter(item.price) %>円
+        </td>
+
+        <td><%= item.genre.name %></td>
+
+        <td>
+          <%= item.is_active? ? "販売中" : "販売停止中" %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<% if @items.empty? %>
+  <p>該当する商品はありません。</p>
+<% end %>
