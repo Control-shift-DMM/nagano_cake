@@ -1,4 +1,10 @@
 Rails.application.routes.draw do
+  get "customers/index"
+  get "customers/show"
+  get "customers/edit"
+  get "customers/new"
+  resource :session
+  resources :passwords, param: :token
  devise_for :admins, skip: [ :registrations ]
  devise_for :customers
 

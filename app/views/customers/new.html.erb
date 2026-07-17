@@ -1,0 +1,42 @@
+<h3>新規会員登録</h3>
+
+<%= form_with url: new_session_path do |f| %>
+
+  <div class="field">
+      <%= f.label :Email, "メールアドレス" %><br>
+      <%= f.text_field :Email, autofocus: true %>
+  </div>
+
+  <div class="field">
+      <%= f.label :Post_code, "郵便番号" %><br>
+      <%= f.text_field :Post_code, autofocus: true %>
+  </div>
+
+   <div class="field">
+      <%= f.label :Address, "住所" %><br>
+      <%= f.text_field :Address, autofocus: true %>
+  </div>
+
+  <div class="field">
+      <%= f.label :Tel, "電話番号（ハイフンなし）" %><br>
+      <%= f.text_field :Tel, autofocus: true %>
+  </div>
+
+  <div class="field">
+      <%= f.label :Password, "パスワード（6文字以上）" %><br>
+      <%= f.text_field :Password, autofocus: true %>
+  </div>
+
+   <div class="field">
+      <%= f.label :Password, "パスワード（確認用）" %><br>
+      <%= f.text_field :Password, autofocus: true %>
+  </div>
+
+   <div class="actions">
+    <%= f.submit "新規登録", class: "btn btn-primary text-white my-3" %>
+  </div>
+<% end %> 
+
+<h3>会員登録がお済みでない方</h3>
+
+<%= link_to "こちら", new_customer_session_path %>からログインしてください。

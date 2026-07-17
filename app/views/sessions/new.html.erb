@@ -1,0 +1,45 @@
+<% 
+=begin %>
+
+<%= tag.div(flash[:alert], style: "color:red") if flash[:alert] %>
+<%= tag.div(flash[:notice], style: "color:green") if flash[:notice] %>
+
+<%= form_with url: session_path do |form| %>
+  <%= form.email_field :email_address, required: true, autofocus: true, autocomplete: "username", placeholder: "Enter your email address", value: params[:email_address] %><br>
+  <%= form.password_field :password, required: true, autocomplete: "current-password", placeholder: "Enter your password", maxlength: 72 %><br>
+  <%= form.submit "Sign in" %>
+<% end %>
+<br>
+
+<%= link_to "Forgot password?", new_password_path %>
+
+<% 
+=end %>
+
+<h3>ログイン</h3>
+
+<p>会員の方はこちらからログイン</p>
+
+<%= form_with url: new_session_path do |f| %>
+
+  <div class="field">
+      <%= f.label :Email, "メールアドレス" %><br>
+      <%= f.text_field :Email, autofocus: true %>
+  </div>
+
+  <div class="field">
+      <%= f.label :password, "パスワード" %><br>
+      <%= f.text_field :password, autofocus: true %>
+  </div>
+
+   <div class="actions">
+    <%= f.submit "ログイン", class: "btn btn-primary text-white my-3" %>
+  </div>
+<% end %> 
+
+<h3>会員登録がお済みでない方</h3>
+
+<%= link_to "こちら", new_customer_session_path %>から新規登録を行ってください。
+
+
+
