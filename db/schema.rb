@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_07_17_083336) do
+ActiveRecord::Schema[8.1].define(version: 2026_07_18_021127) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
@@ -88,6 +88,16 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_17_083336) do
     t.integer "price", null: false
     t.datetime "updated_at", null: false
     t.index ["genre_id"], name: "index_items_on_genre_id"
+  end
+
+  create_table "sessions", force: :cascade do |t|
+    t.integer "account_id", null: false
+    t.string "account_type", null: false
+    t.datetime "created_at", null: false
+    t.string "ip_address"
+    t.datetime "updated_at", null: false
+    t.string "user_agent"
+    t.index ["account_type", "account_id"], name: "index_sessions_on_account"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
