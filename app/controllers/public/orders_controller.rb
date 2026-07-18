@@ -8,6 +8,7 @@ class OrdersController < ApplicationController
   def confirm
     @order = Current.customer.orders.new(order_params)
     set_order
+    @cart_items = Current.customer.cart_items.includes(:item)
   end
 
   def complete
