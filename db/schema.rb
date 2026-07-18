@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_07_16_044934) do
+ActiveRecord::Schema[8.1].define(version: 2026_07_17_083336) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
@@ -43,6 +43,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_16_044934) do
     t.datetime "created_at", null: false
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
+    t.string "password_digest"
     t.datetime "remember_created_at"
     t.datetime "reset_password_sent_at"
     t.string "reset_password_token"
@@ -61,6 +62,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_16_044934) do
     t.boolean "is_active", default: true, null: false
     t.string "last_name", null: false
     t.string "last_name_kana", null: false
+    t.string "password_digest"
     t.string "postal_code", null: false
     t.datetime "remember_created_at"
     t.datetime "reset_password_sent_at"
