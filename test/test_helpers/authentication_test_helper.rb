@@ -8,6 +8,16 @@ module AuthenticationTestHelper
            }
          }
   end
+
+  def sign_in_as_customer(customer, password: "password")
+    post customer_session_path,
+         params: {
+           customer: {
+             email: customer.email,
+             password: password
+           }
+         }
+  end
 end
 
 class ActionDispatch::IntegrationTest
