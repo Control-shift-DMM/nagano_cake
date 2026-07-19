@@ -23,11 +23,13 @@ Rails.application.routes.draw do
          to: "public/authentication_sessions#destroy",
          as: :destroy_customer_session
 
-  devise_for :customers,
-             skip: [ :passwords, :sessions ],
-             controllers: {
-               registrations: "public/registrations"
-             }
+  get "customers/sign_up",
+      to: "public/registrations#new",
+      as: :new_customer_registration
+
+  post "customers",
+       to: "public/registrations#create",
+       as: :customer_registration
 
   namespace :admin do
     root to: "homes#top"

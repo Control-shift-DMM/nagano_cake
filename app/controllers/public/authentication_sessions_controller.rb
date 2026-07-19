@@ -10,7 +10,7 @@ class Public::AuthenticationSessionsController < ApplicationController
     )
 
     if customer&.is_active? &&
-       customer.valid_password?(credentials[:password])
+       customer.authenticate(credentials[:password])
       terminate_session if Current.session
       start_new_session_for(customer)
 
