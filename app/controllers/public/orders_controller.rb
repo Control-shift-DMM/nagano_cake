@@ -15,8 +15,25 @@ class OrdersController < ApplicationController
   end
 
   def create
-    @order.save
-    @order.Orderdatail.
+    ActiveRecord::Base.transaction do
+      @order.save!
+      @cart_items.each do |cart_item|
+        @order.order_details.create!(
+          item_id: cart_item.item_id,
+          price: cart_item.item.with_tax_price,
+          amount: cart_item.amount
+        )
+      end
+
+      @cart_items.destroy_all
+    end
+    redirect_to complete_orders_path
+
+    # save・create処理で例外が発生したロールバックしこの処理を実行
+    rescue ActiveRecord::RecordInvalid
+      # データ作成失敗時リダイレクト
+      redirect_to new_order_path
+    end
   end
 
   def index

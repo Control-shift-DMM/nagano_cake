@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_07_17_022256) do
+ActiveRecord::Schema[8.1].define(version: 2026_07_19_041630) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
@@ -88,6 +88,18 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_17_022256) do
     t.index ["genre_id"], name: "index_items_on_genre_id"
   end
 
+  create_table "order_details", force: :cascade do |t|
+    t.integer "amount", null: false
+    t.datetime "created_at", null: false
+    t.integer "item_id", null: false
+    t.integer "making_status", default: 0, null: false
+    t.integer "order_id", null: false
+    t.integer "price", null: false
+    t.datetime "updated_at", null: false
+    t.index ["item_id"], name: "index_order_details_on_item_id"
+    t.index ["order_id"], name: "index_order_details_on_order_id"
+  end
+
   create_table "orders", force: :cascade do |t|
     t.string "address", null: false
     t.datetime "created_at", null: false
@@ -105,5 +117,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_17_022256) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "items", "genres"
+  add_foreign_key "order_details", "items"
+  add_foreign_key "order_details", "orders"
   add_foreign_key "orders", "customers"
 end

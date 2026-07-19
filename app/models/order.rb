@@ -1,5 +1,6 @@
 class Order < ApplicationRecord
   belongs_to :customer
+  has_many :items, throgh: :order_details
 
 
   #enum 設定 config/ja.ymlに設定済み
