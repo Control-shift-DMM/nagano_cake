@@ -1,0 +1,35 @@
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6 col-lg-5">
+      <h1 class="h3 mb-4">管理者ログイン</h1>
+
+      <%= form_with url: admin_session_path,
+                    scope: :admin,
+                    local: true do |form| %>
+        <div class="mb-3">
+          <%= form.label :email,
+                         "メールアドレス",
+                         class: "form-label" %>
+          <%= form.email_field :email,
+                               required: true,
+                               autofocus: true,
+                               autocomplete: "username",
+                               class: "form-control" %>
+        </div>
+
+        <div class="mb-4">
+          <%= form.label :password,
+                         "パスワード",
+                         class: "form-label" %>
+          <%= form.password_field :password,
+                                  required: true,
+                                  autocomplete: "current-password",
+                                  class: "form-control" %>
+        </div>
+
+        <%= form.submit "ログイン",
+                        class: "btn btn-primary w-100" %>
+      <% end %>
+    </div>
+  </div>
+</div>

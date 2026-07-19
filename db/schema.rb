@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_07_19_041630) do
+ActiveRecord::Schema[8.1].define(version: 2026_07_19_061048) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
@@ -42,33 +42,25 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_19_041630) do
   create_table "admins", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "email", default: "", null: false
-    t.string "encrypted_password", default: "", null: false
-    t.datetime "remember_created_at"
-    t.datetime "reset_password_sent_at"
-    t.string "reset_password_token"
+    t.string "password_digest"
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_admins_on_email", unique: true
-    t.index ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true
   end
 
   create_table "customers", force: :cascade do |t|
     t.string "address", null: false
     t.datetime "created_at", null: false
     t.string "email", default: "", null: false
-    t.string "encrypted_password", default: "", null: false
     t.string "first_name", null: false
     t.string "first_name_kana", null: false
     t.boolean "is_active", default: true, null: false
     t.string "last_name", null: false
     t.string "last_name_kana", null: false
+    t.string "password_digest"
     t.string "postal_code", null: false
-    t.datetime "remember_created_at"
-    t.datetime "reset_password_sent_at"
-    t.string "reset_password_token"
     t.string "telephone_number", null: false
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_customers_on_email", unique: true
-    t.index ["reset_password_token"], name: "index_customers_on_reset_password_token", unique: true
   end
 
   create_table "genres", force: :cascade do |t|
@@ -112,6 +104,16 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_19_041630) do
     t.integer "total_payment", null: false
     t.datetime "updated_at", null: false
     t.index ["customer_id"], name: "index_orders_on_customer_id"
+  end
+
+  create_table "sessions", force: :cascade do |t|
+    t.integer "account_id", null: false
+    t.string "account_type", null: false
+    t.datetime "created_at", null: false
+    t.string "ip_address"
+    t.datetime "updated_at", null: false
+    t.string "user_agent"
+    t.index ["account_type", "account_id"], name: "index_sessions_on_account"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"

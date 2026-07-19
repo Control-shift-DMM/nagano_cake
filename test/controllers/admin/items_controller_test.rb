@@ -1,8 +1,6 @@
 require "test_helper"
 
 class Admin::ItemsControllerTest < ActionDispatch::IntegrationTest
-  include Devise::Test::IntegrationHelpers
-
   setup do
     @admin = Admin.create!(
       email: "admin@example.com",
@@ -28,7 +26,7 @@ class Admin::ItemsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "ログイン後は商品一覧を表示できる" do
-    sign_in @admin
+    sign_in_as_admin @admin
 
     get admin_items_path
 
@@ -37,7 +35,7 @@ class Admin::ItemsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "商品名で検索できる" do
-    sign_in @admin
+    sign_in_as_admin @admin
 
     other_item = Item.create!(
       genre: @genre,
@@ -55,7 +53,7 @@ class Admin::ItemsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "商品新規登録画面を表示できる" do
-    sign_in @admin
+    sign_in_as_admin @admin
 
     get new_admin_item_path
 
@@ -63,7 +61,7 @@ class Admin::ItemsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "商品詳細画面を表示できる" do
-    sign_in @admin
+    sign_in_as_admin @admin
 
     get admin_item_path(@item)
 
@@ -72,7 +70,7 @@ class Admin::ItemsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "商品編集画面を表示できる" do
-    sign_in @admin
+    sign_in_as_admin @admin
 
     get edit_admin_item_path(@item)
 
@@ -80,7 +78,7 @@ class Admin::ItemsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "商品を新規登録できる" do
-    sign_in @admin
+    sign_in_as_admin @admin
 
     uploaded_image = Rack::Test::UploadedFile.new(
       Rails.root.join("app/assets/images/default-image.jpg").to_s,
@@ -111,7 +109,7 @@ class Admin::ItemsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "不正な内容では商品を登録できない" do
-    sign_in @admin
+    sign_in_as_admin @admin
 
     assert_no_difference("Item.count") do
       post admin_items_path,
@@ -130,7 +128,7 @@ class Admin::ItemsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "商品情報と販売ステータスを更新できる" do
-    sign_in @admin
+    sign_in_as_admin @admin
 
     patch admin_item_path(@item),
           params: {
@@ -154,7 +152,7 @@ class Admin::ItemsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "不正な内容では商品を更新できない" do
-    sign_in @admin
+    sign_in_as_admin @admin
 
     patch admin_item_path(@item),
           params: {
