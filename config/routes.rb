@@ -11,11 +11,22 @@ Rails.application.routes.draw do
          to: "admin/authentication_sessions#destroy",
          as: :destroy_admin_session
 
+  get "customers/sign_in",
+      to: "public/authentication_sessions#new",
+      as: :new_customer_session
+
+  post "customers/sign_in",
+       to: "public/authentication_sessions#create",
+       as: :customer_session
+
+  delete "customers/sign_out",
+         to: "public/authentication_sessions#destroy",
+         as: :destroy_customer_session
+
   devise_for :customers,
-             skip: [ :passwords ],
+             skip: [ :passwords, :sessions ],
              controllers: {
-               registrations: "public/registrations",
-               sessions: "public/sessions"
+               registrations: "public/registrations"
              }
 
   namespace :admin do
