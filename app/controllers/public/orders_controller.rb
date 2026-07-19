@@ -67,7 +67,7 @@ class OrdersController < ApplicationController
 
   def set_payment_info
     @order.shipping_cost = 800
-    @order.total_payment = @cart_items.sum(&:sub_total_method) + @order.shipping_cost
+    @order.total_payment = @cart_items.sum(&:calc_sub_total) + @order.shipping_cost
   end
 
   # 郵便番号・住所・宛名をセットする処理

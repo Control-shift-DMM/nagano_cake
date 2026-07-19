@@ -15,7 +15,7 @@
           <td><%= cart_item.item.name %></td>
           <td><%= cart_item.item.with_tax_price %></td>
           <td><%= cart_item.amount %></td>
-          <td><%= cart_item.sub_total_method %> </td>  
+          <td><%= cart_item.calc_sub_total %> </td>  
           <%# ↑ cart_itemモデルが出来たら小計を求めるメソッドを記述 %>
         </tr>
       <%end%>
@@ -32,7 +32,7 @@
       </tr>
       <tr>
         <td>商品合計</td>
-        <td><%= @cart_items.sum(&:sub_total_method)%></td>
+        <td><%= @cart_items.sum(&:calc_sub_total)%></td>
       </tr>
       <tr>
         <td>請求金額</td>
