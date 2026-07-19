@@ -1,9 +1,15 @@
 Rails.application.routes.draw do
-  devise_for :admins,
-             skip: [ :registrations, :passwords ],
-             controllers: {
-               sessions: "admin/sessions"
-             }
+  get "admins/sign_in",
+      to: "admin/authentication_sessions#new",
+      as: :new_admin_session
+
+  post "admins/sign_in",
+       to: "admin/authentication_sessions#create",
+       as: :admin_session
+
+  delete "admins/sign_out",
+         to: "admin/authentication_sessions#destroy",
+         as: :destroy_admin_session
 
   devise_for :customers,
              skip: [ :passwords ],

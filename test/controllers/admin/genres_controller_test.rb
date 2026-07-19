@@ -1,8 +1,6 @@
 require "test_helper"
 
 class Admin::GenresControllerTest < ActionDispatch::IntegrationTest
-  include Devise::Test::IntegrationHelpers
-
   setup do
     @admin = Admin.create!(
       email: "admin@example.com",
@@ -20,7 +18,7 @@ class Admin::GenresControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "ログイン後はジャンル一覧を表示できる" do
-    sign_in @admin
+    sign_in_as_admin @admin
 
     get admin_genres_path
 
@@ -28,7 +26,7 @@ class Admin::GenresControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "ログイン後はジャンル編集画面を表示できる" do
-    sign_in @admin
+    sign_in_as_admin @admin
 
     get edit_admin_genre_path(@genre)
 
@@ -36,7 +34,7 @@ class Admin::GenresControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "ジャンルを新規登録できる" do
-    sign_in @admin
+    sign_in_as_admin @admin
 
     assert_difference("Genre.count", 1) do
       post admin_genres_path,
@@ -47,7 +45,7 @@ class Admin::GenresControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "空欄のジャンルは登録できない" do
-    sign_in @admin
+    sign_in_as_admin @admin
 
     assert_no_difference("Genre.count") do
       post admin_genres_path,
@@ -58,7 +56,7 @@ class Admin::GenresControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "ジャンル名を更新できる" do
-    sign_in @admin
+    sign_in_as_admin @admin
 
     patch admin_genre_path(@genre),
           params: { genre: { name: "和菓子" } }
@@ -68,7 +66,7 @@ class Admin::GenresControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "空欄ではジャンル名を更新できない" do
-    sign_in @admin
+    sign_in_as_admin @admin
 
     patch admin_genre_path(@genre),
           params: { genre: { name: "" } }
