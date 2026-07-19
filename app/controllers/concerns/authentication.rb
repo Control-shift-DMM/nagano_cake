@@ -12,6 +12,20 @@ module Authentication
 
   private
 
+  def require_admin_authentication
+    return if admin_signed_in?
+
+    redirect_to new_admin_session_path,
+                alert: "管理者としてログインしてください"
+  end
+
+  def require_customer_authentication
+    return if customer_signed_in?
+
+    redirect_to new_customer_session_path,
+                alert: "ログインしてください"
+  end
+
   def resume_session
     Current.session ||= find_session_by_cookie
   end
