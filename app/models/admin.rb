@@ -1,8 +1,18 @@
 class Admin < ApplicationRecord
+  has_secure_password
+
   has_many :sessions, as: :account, dependent: :destroy
 
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable
+  before_validation :normalize_email
+
+  validates :email,
+            presence: true,
+            uniqueness: { case_sensitive: false },
+            format: { with: URI::MailTo::EMAIL_REGEXP }
+
+  private
+
+  def normalize_email
+    self.email = email.to_s.strip.downcase
+  end
 end

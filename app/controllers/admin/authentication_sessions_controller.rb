@@ -9,7 +9,7 @@ class Admin::AuthenticationSessionsController < ApplicationController
       email: credentials[:email].to_s.strip.downcase
     )
 
-    if admin&.valid_password?(credentials[:password])
+    if admin&.authenticate(credentials[:password])
       terminate_session if Current.session
       start_new_session_for(admin)
 
