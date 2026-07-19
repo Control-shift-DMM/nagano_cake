@@ -37,9 +37,15 @@ class OrdersController < ApplicationController
   end
 
   def index
+    @orders = Current.customer.orders
+                              .includes(order_details: :item)
+                              .order(created_at: :desc)
   end
 
   def show
+    @order = Current.customer.orders
+                             .includes(order_details: :item)
+                             .find(params[:id])
   end
 
   private
