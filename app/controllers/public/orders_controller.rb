@@ -1,4 +1,6 @@
 class OrdersController < ApplicationController
+  before_action :set_order_and_cart_items ,only: [:confirm ,:create]
+  before_action :set_payment_info ,only: [:confirm ,:create]
   def new
     @order = Current.customer.orders.new
     # ログイン顧客が登録してる配送先のレコード全取得
@@ -6,15 +8,15 @@ class OrdersController < ApplicationController
   end
 
   def confirm
-    @order = Current.customer.orders.new(order_params)
-    set_order
-    @cart_items = Current.customer.cart_items.includes(:item)
+    set_order_element
   end
 
   def complete
   end
 
   def create
+    @order.save
+    @order.Orderdatail.
   end
 
   def index
@@ -35,8 +37,18 @@ class OrdersController < ApplicationController
     )
   end
 
+  def set_order_and_cart_items
+    @order = Current.customer.orders.new(order_params)
+    @cart_items = Current.customer.cart_items.includes(:item)
+  end
+
+  def set_payment_info
+    @order.shipping_cost = 800
+    @order.total_payment = @cart_items.sum(&:sub_total_method) + @order.shipping_cost
+  end
+
   # 郵便番号・住所・宛名をセットする処理
-  def set_order
+  def set_order_element
     case params[:order][:select_address]
     when "0"  #ご自身の住所の場合 値の上書き
       @order.postal_code = Current.customer.postal_code

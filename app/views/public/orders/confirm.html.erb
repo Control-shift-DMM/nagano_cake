@@ -28,7 +28,7 @@
     <tbody>
       <tr>
         <td>送料</td>
-        <td>800</td>
+        <td><%= @order.shipping_cost %></td>
       </tr>
       <tr>
         <td>商品合計</td>
@@ -36,7 +36,7 @@
       </tr>
       <tr>
         <td>請求金額</td>
-        <td>請求額計算メソッド</td>
+        <td><%= @order.total_payment %></td>
       </tr>
     </tbody>
   </table>
@@ -46,6 +46,7 @@
 <%=@order.payment_method_i18n%>
 
 お届け先
+〒
 <%= @order.postal_code %>
 <%= @order.address%>
 <%= @order.name%>
