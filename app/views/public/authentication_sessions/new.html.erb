@@ -1,0 +1,43 @@
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6 col-lg-5">
+      <h1 class="h3 mb-4">会員ログイン</h1>
+
+      <%= form_with url: customer_session_path,
+                    scope: :customer,
+                    local: true do |form| %>
+        <div class="mb-3">
+          <%= form.label :email,
+                         "メールアドレス",
+                         class: "form-label" %>
+          <%= form.email_field :email,
+                               required: true,
+                               autofocus: true,
+                               autocomplete: "username",
+                               class: "form-control" %>
+        </div>
+
+        <div class="mb-4">
+          <%= form.label :password,
+                         "パスワード",
+                         class: "form-label" %>
+          <%= form.password_field :password,
+                                  required: true,
+                                  autocomplete: "current-password",
+                                  class: "form-control" %>
+        </div>
+
+        <%= form.submit "ログイン",
+                        class: "btn btn-primary w-100" %>
+      <% end %>
+
+      <div class="mt-4">
+        <p class="mb-2">会員登録がお済みでない方</p>
+
+        <%= link_to "新規登録",
+                    new_customer_registration_path,
+                    class: "btn btn-outline-secondary w-100" %>
+      </div>
+    </div>
+  </div>
+</div>
