@@ -1,3 +1,3 @@
 class Admin::ApplicationController < ApplicationController
-  before_action :authenticate_admin!
+  before_action :require_admin_authentication
 end

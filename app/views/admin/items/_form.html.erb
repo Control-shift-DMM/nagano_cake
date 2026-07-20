@@ -1,0 +1,66 @@
+<% if item.errors.any? %>
+  <div>
+    <h3><%= item.errors.count %>件のエラーが発生しました</h3>
+
+    <ul>
+      <% item.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<%= form_with model: [:admin, item] do |f| %>
+  <div>
+    <%= f.label :image, "商品画像" %>
+
+    <% if item.persisted? && item.image.attached? %>
+      <div>
+        <%= image_tag item.image, size: "120x120" %>
+      </div>
+    <% end %>
+
+    <%= f.file_field :image, accept: "image/*" %>
+  </div>
+
+  <div>
+    <%= f.label :name, "商品名" %>
+    <%= f.text_field :name %>
+  </div>
+
+  <div>
+    <%= f.label :introduction, "商品説明" %>
+    <%= f.text_area :introduction %>
+  </div>
+
+  <div>
+    <%= f.label :genre_id, "ジャンル" %>
+    <%= f.collection_select(
+          :genre_id,
+          genres,
+          :id,
+          :name,
+          prompt: "選択してください"
+        ) %>
+  </div>
+
+  <div>
+    <%= f.label :price, "税抜価格" %>
+    <%= f.number_field :price, min: 0 %>
+    <span>円</span>
+  </div>
+
+  <div>
+    <%= f.label :is_active, "販売ステータス" %>
+
+    <%= f.radio_button :is_active, true %>
+    <%= f.label :is_active_true, "販売中" %>
+
+    <%= f.radio_button :is_active, false %>
+    <%= f.label :is_active_false, "販売停止中" %>
+  </div>
+
+  <div>
+    <%= f.submit %>
+  </div>
+<% end %>
