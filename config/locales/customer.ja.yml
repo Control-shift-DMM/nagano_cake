@@ -1,0 +1,17 @@
+ja:
+  activerecord:
+    models:
+      customer: 会員
+    attributes:
+      customer:
+        last_name: 姓
+        first_name: 名
+        last_name_kana: 姓カナ
+        first_name_kana: 名カナ
+        postal_code: 郵便番号
+        address: 住所
+        telephone_number: 電話番号
+        email: メールアドレス
+        is_active: 会員ステータス
+        password: パスワード
+        password_confirmation: パスワード確認
