@@ -1,6 +1,7 @@
 class Customer < ApplicationRecord
   has_secure_password
 
+  has_many :orders
   has_many :sessions, as: :account, dependent: :destroy
 
   before_validation :normalize_email
