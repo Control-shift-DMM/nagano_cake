@@ -2,9 +2,9 @@ class Public::OrdersController < ApplicationController
   before_action :set_order_and_cart_items ,only: [:confirm ,:create]
   before_action :set_payment_info ,only: [:confirm ,:create]
   def new
-    @order = Current.account.orders.new
+    @order = current_customer.orders.new
     # ログイン顧客が登録してる配送先のレコード全取得
-    @addresses = Current.account.addresses
+    @addresses = current_customer.addresses
   end
 
   def confirm
@@ -39,13 +39,13 @@ class Public::OrdersController < ApplicationController
 
 
   def index
-    @orders = Current.account.orders
+    @orders = current_customer.orders
                               .includes(order_details: :item)
                               .order(created_at: :desc)
   end
 
   def show
-    @order = Current.account.orders
+    @order = current_customer.orders
                              .includes(order_details: :item)
                              .find(params[:id])
   end
@@ -63,8 +63,8 @@ class Public::OrdersController < ApplicationController
   end
 
   def set_order_and_cart_items
-    @order = Current.account.orders.new(order_params)
-    @cart_items = Current.account.cart_items.includes(:item)
+    @order = current_customer.orders.new(order_params)
+    @cart_items = current_customer.cart_items.includes(:item)
   end
 
   def set_payment_info
@@ -76,12 +76,12 @@ class Public::OrdersController < ApplicationController
   def set_order_element
     case params[:order][:select_address]
     when "0"  #ご自身の住所の場合 値の上書き
-      @order.postal_code = Current.account.postal_code
-      @order.address     = Current.account.address
-      @order.name        = "#{Current.account.last_name}#{Current.account.first_name}"
+      @order.postal_code = current_customer.postal_code
+      @order.address     = current_customer.address
+      @order.name        = "#{current_customer.last_name}#{current_customer.first_name}"
 
     when "1" #登録済み住所の場合 値の上書き
-      address = Current.account.addresses.find(params[:order][:address_id])
+      address = current_customer.addresses.find(params[:order][:address_id])
 
       @order.postal_code = address.postal_code
       @order.address     = address.address
