@@ -7,5 +7,4 @@ class CartItem < ApplicationRecord
   def calc_sub_total
     price * amount
   end
-
 end
