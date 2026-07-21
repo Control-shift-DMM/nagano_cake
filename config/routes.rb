@@ -31,7 +31,6 @@ Rails.application.routes.draw do
   post "customers",
        to: "public/registrations#create",
        as: :customer_registration
->>>>>>> develop
 
   post "admins/sign_in",
        to: "admin/authentication_sessions#create",
