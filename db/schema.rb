@@ -48,6 +48,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_19_061048) do
     t.datetime "updated_at", null: false
   end
 
+
   create_table "admins", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "email", default: "", null: false
