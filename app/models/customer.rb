@@ -1,5 +1,4 @@
 class Customer < ApplicationRecord
-
   has_secure_password
 
   has_many :sessions, as: :account, dependent: :destroy
@@ -32,5 +31,4 @@ class Customer < ApplicationRecord
   def normalize_email
     self.email = email.to_s.strip.downcase
   end
-
 end
