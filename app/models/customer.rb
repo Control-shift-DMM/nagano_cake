@@ -3,6 +3,10 @@ class Customer < ApplicationRecord
 
   has_many :sessions, as: :account, dependent: :destroy
 
+  has_many :cart_items, dependent: :destroy
+  has_many :addresses, dependent: :destroy
+  has_many :orders
+
   before_validation :normalize_email
 
   validates :last_name,

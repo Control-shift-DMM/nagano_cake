@@ -31,6 +31,7 @@ Rails.application.routes.draw do
        to: "public/registrations#create",
        as: :customer_registration
 
+  # 管理者側のルーティング
   namespace :admin do
     root to: "homes#top"
 
@@ -41,6 +42,7 @@ Rails.application.routes.draw do
     resources :order_details, only: [ :update ]
   end
 
+  # 顧客側のルーティング（カートや配送先、注文など）
   scope module: :public do
     root to: "homes#top"
     get "about", to: "homes#about"
