@@ -9,6 +9,12 @@ class Public::OrdersController < ApplicationController
 
   def confirm
     set_order_element
+
+    if @order.errors.any?
+      @addresses = current_customer.addresses
+      render :new, status: :unprocessable_entity
+      return
+    end
   end
 
   def complete
@@ -33,7 +39,7 @@ class Public::OrdersController < ApplicationController
   # save・create処理で例外が発生した場合値をロールバックしこの処理を実行(トランザクション処理)
   # インデントはdef createと同じ位置が正常位置
   rescue ActiveRecord::RecordInvalid
-    # データ作成失敗時リダイレクト
+    flash[:alert] = "注文の作成に失敗しました。"
     redirect_to new_order_path
   end
 
@@ -81,6 +87,12 @@ class Public::OrdersController < ApplicationController
       @order.name        = "#{current_customer.last_name}#{current_customer.first_name}"
 
     when "1" #登録済み住所の場合 値の上書き
+
+      if params[:order][:address_id].blank?
+        @order.errors.add(:address_id, "を選択してください")
+        return
+      end
+
       address = current_customer.addresses.find(params[:order][:address_id])
 
       @order.postal_code = address.postal_code

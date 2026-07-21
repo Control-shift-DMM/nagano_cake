@@ -1,3 +1,5 @@
+<%= render 'error' order:@order %>
+<%= render 'flash' %>
 <h1>注文情報入力</h1>
 <%= form_with model:@order ,url:confirm_orders_path do |f| %>
   <!-- 支払方法 -->
@@ -26,16 +28,21 @@
 
   <!-- 登録済み住所 -->
   <div>
-    <%= f.radio_button :select_address, 1 %>
-    <%= f.label :select_address_1, "登録済住所から選択" %><br>
+    <% if @addresses.present? %>
+      <%= f.radio_button :select_address, 1 %>
+      <%= f.label :select_address_1, "登録済住所から選択" %><br>
 
-    <%= f.collection_select(
-      :address_id,
-      @addresses,
-      :id,
-      #:address_display  addressモデル作成完了時にメソッド導入予定
-      )
-    %>
+      <%= f.collection_select(
+        :address_id,
+        @addresses,
+        :id,
+        #:address_display  addressモデル作成完了時にメソッド導入予定
+        )
+      %>
+    <% else %>
+      <p>登録済み住所がありません。</p>
+    <% end %>
+
   </div>
 
   <br>
