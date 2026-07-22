@@ -1,12 +1,15 @@
 class Public::OrdersController < ApplicationController
   before_action :set_order_and_cart_items ,only: [:confirm ,:create]
   before_action :set_payment_info ,only: [:confirm ,:create]
+
+  #注文情報入力画面
   def new
     @order = current_customer.orders.new
     # ログイン顧客が登録してる配送先のレコード全取得
     @addresses = current_customer.addresses
   end
 
+  #注文情報確認画面
   def confirm
     set_order_element
 
@@ -17,9 +20,11 @@ class Public::OrdersController < ApplicationController
     end
   end
 
+  #サンクスページ
   def complete
   end
 
+  #注文情報確認画面 → 注文確定処理
   def create
     ActiveRecord::Base.transaction do
       @order.save!
@@ -43,13 +48,14 @@ class Public::OrdersController < ApplicationController
     redirect_to new_order_path
   end
 
-
+  #注文情報一覧画面
   def index
     @orders = current_customer.orders
                               .includes(order_details: :item)
                               .order(created_at: :desc)
   end
 
+  #注文情報詳細画面
   def show
     @order = current_customer.orders
                              .includes(order_details: :item)
