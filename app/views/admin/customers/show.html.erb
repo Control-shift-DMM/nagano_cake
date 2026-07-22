@@ -1,35 +1,112 @@
-<h2><%= @customer.last_name %><%= @customer.first_name %>さんの会員詳細</h2>
+<div class="py-4 px-lg-5">
+  <h1 class="h4 d-inline-block bg-light px-4 py-2 mb-5">
+    <%= @customer.last_name %><%= @customer.first_name %>さんの会員詳細
+  </h1>
 
-<dl>
-  <dt>会員ID</dt>
-  <dd><%= @customer.id %></dd>
+  <div class="row">
+    <div class="col-lg-9">
+      <div class="row mb-3">
+        <div class="col-sm-3 fw-semibold">
+          会員ID
+        </div>
 
-  <dt>氏名</dt>
-  <dd><%= @customer.last_name %> <%= @customer.first_name %></dd>
+        <div class="col-sm-9">
+          <%= @customer.id %>
+        </div>
+      </div>
 
-  <dt>フリガナ</dt>
-  <dd><%= @customer.last_name_kana %> <%= @customer.first_name_kana %></dd>
+      <div class="row mb-3">
+        <div class="col-sm-3 fw-semibold">
+          氏名
+        </div>
 
-  <dt>郵便番号</dt>
-  <dd><%= @customer.postal_code %></dd>
+        <div class="col-sm-9">
+          <%= @customer.last_name %>
+          <%= @customer.first_name %>
+        </div>
+      </div>
 
-  <dt>住所</dt>
-  <dd><%= @customer.address %></dd>
+      <div class="row mb-3">
+        <div class="col-sm-3 fw-semibold">
+          フリガナ
+        </div>
 
-  <dt>電話番号</dt>
-  <dd><%= @customer.telephone_number %></dd>
+        <div class="col-sm-9">
+          <%= @customer.last_name_kana %>
+          <%= @customer.first_name_kana %>
+        </div>
+      </div>
 
-  <dt>メールアドレス</dt>
-  <dd><%= @customer.email %></dd>
+      <div class="row mb-3">
+        <div class="col-sm-3 fw-semibold">
+          郵便番号
+        </div>
 
-  <dt>会員ステータス</dt>
-  <dd><%= @customer.is_active? ? "有効" : "退会" %></dd>
-</dl>
+        <div class="col-sm-9">
+          <%= @customer.postal_code %>
+        </div>
+      </div>
 
-<p>
-  <%= link_to "編集する", edit_admin_customer_path(@customer) %>
-</p>
+      <div class="row mb-3">
+        <div class="col-sm-3 fw-semibold">
+          住所
+        </div>
 
-<p>
-  <%= link_to "会員一覧へ戻る", admin_customers_path %>
-</p>
+        <div class="col-sm-9">
+          <%= @customer.address %>
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <div class="col-sm-3 fw-semibold">
+          電話番号
+        </div>
+
+        <div class="col-sm-9">
+          <%= @customer.telephone_number %>
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <div class="col-sm-3 fw-semibold">
+          メールアドレス
+        </div>
+
+        <div class="col-sm-9">
+          <%= @customer.email %>
+        </div>
+      </div>
+
+      <div class="row mb-4">
+        <div class="col-sm-3 fw-semibold">
+          会員ステータス
+        </div>
+
+        <div class="col-sm-9">
+          <% if @customer.is_active? %>
+            <span class="fw-semibold text-success">
+              有効
+            </span>
+          <% else %>
+            <span class="fw-semibold text-secondary">
+              退会
+            </span>
+          <% end %>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="offset-sm-3 col-sm-9 d-flex gap-3">
+          <%= link_to "編集する",
+                      edit_admin_customer_path(@customer),
+                      class: "btn btn-success px-5" %>
+
+          <button type="button"
+                  class="btn btn-primary px-4">
+            注文履歴一覧を見る
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
