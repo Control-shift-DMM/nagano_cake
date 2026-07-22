@@ -1,35 +1,56 @@
-<h2>会員一覧</h2>
+<div class="py-4">
+  <div class="ps-lg-3">
+    <h1 class="h4 d-inline-block bg-light px-4 py-2 mb-4">
+      会員一覧
+    </h1>
+  </div>
 
-<table>
-  <thead>
-    <tr>
-      <th>会員ID</th>
-      <th>氏名</th>
-      <th>メールアドレス</th>
-      <th>会員ステータス</th>
-    </tr>
-  </thead>
+  <div class="px-lg-5">
+    <% if @customers.any? %>
+      <div class="table-responsive">
+        <table class="table table-hover align-middle">
+          <thead class="table-light">
+            <tr>
+              <th scope="col">会員ID</th>
+              <th scope="col">氏名</th>
+              <th scope="col">メールアドレス</th>
+              <th scope="col">ステータス</th>
+            </tr>
+          </thead>
 
-  <tbody>
-    <% @customers.each do |customer| %>
-      <tr>
-        <td><%= customer.id %></td>
+          <tbody>
+            <% @customers.each do |customer| %>
+              <tr>
+                <td><%= customer.id %></td>
 
-        <td>
-          <%= link_to "#{customer.last_name} #{customer.first_name}",
-                      admin_customer_path(customer) %>
-        </td>
+                <td>
+                  <%= link_to "#{customer.last_name} #{customer.first_name}",
+                              admin_customer_path(customer),
+                              class: "fw-semibold text-dark" %>
+                </td>
 
-        <td><%= customer.email %></td>
+                <td><%= customer.email %></td>
 
-        <td>
-          <%= customer.is_active? ? "有効" : "退会" %>
-        </td>
-      </tr>
+                <td>
+                  <% if customer.is_active? %>
+                    <span class="fw-semibold text-success">
+                      有効
+                    </span>
+                  <% else %>
+                    <span class="fw-semibold text-secondary">
+                      退会
+                    </span>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    <% else %>
+      <div class="alert alert-secondary">
+        会員が登録されていません。
+      </div>
     <% end %>
-  </tbody>
-</table>
-
-<% if @customers.empty? %>
-  <p>会員が登録されていません。</p>
-<% end %>
+  </div>
+</div>
