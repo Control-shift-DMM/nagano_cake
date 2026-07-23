@@ -30,18 +30,23 @@ class Public::CartItemsController < ApplicationController
   def create
     @cart_item = current_customer.cart_items.new(cart_item_params)
     current_cart_item = current_customer.cart_items.find_by(item_id: @cart_item.item_id)
+    if @cart_item.amount.nil?
+      redirect_to item_path(@cart_item.item_id), alert: 'カートに商品を追加できませんでした。'
+      return
+    end
+
     if current_cart_item.nil?
       if @cart_item.save
         redirect_to cart_items_path, notice: 'カートに商品を追加しました。'
       else
-        redirect_to items_path, alert: 'カートに商品を追加できませんでした。'
+        redirect_to item_path(@cart_item.item_id), alert: 'カートに商品を追加できませんでした。'
       end
     else
       current_cart_item.amount += @cart_item.amount
       if current_cart_item.update(amount: current_cart_item.amount)
         redirect_to cart_items_path, notice: 'カート内の商品を更新しました。'
       else
-        redirect_to items_path, alert: 'カート内の商品を更新できませんでした。'
+        redirect_to item_path(@cart_item.item_id), alert: 'カート内の商品を更新できませんでした。'
       end
     end
   end
