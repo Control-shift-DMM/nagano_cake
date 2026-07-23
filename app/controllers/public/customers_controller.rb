@@ -28,7 +28,7 @@ class Public::CustomersController < ApplicationController
       :postal_code,
       :address,
       :telephone_number,
-      :email,
+      :email
     )
   end
 end
