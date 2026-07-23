@@ -1,4 +1,7 @@
 class Public::CartItemsController < ApplicationController
+
+  before_action :require_customer_authentication
+
   def index
     @cart_items = current_customer.cart_items
     @total_price = 0 #合計金額　あとで調節
@@ -26,10 +29,20 @@ class Public::CartItemsController < ApplicationController
 
   def create
     @cart_item = current_customer.cart_items.new(cart_item_params)
-    if @cart_item.save
-      redirect_to cart_items_path, notice: 'カートに商品を追加しました。'
+    current_cart_item = current_customer.cart_items.find_by(item_id: @cart_item.item_id)
+    if current_cart_item.nil?
+      if @cart_item.save
+        redirect_to cart_items_path, notice: 'カートに商品を追加しました。'
+      else
+        redirect_to items_path, alert: 'カートに商品を追加できませんでした。'
+      end
     else
-      redirect_to items_path, alert: 'カートに商品を追加できませんでした。'
+      current_cart_item.amount += @cart_item.amount
+      if current_cart_item.update(amount: current_cart_item.amount)
+        redirect_to cart_items_path, notice: 'カート内の商品を更新しました。'
+      else
+        redirect_to items_path, alert: 'カート内の商品を更新できませんでした。'
+      end
     end
   end
 
