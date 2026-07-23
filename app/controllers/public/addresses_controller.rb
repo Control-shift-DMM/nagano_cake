@@ -45,4 +45,11 @@ class Public::AddressesController < ApplicationController
   def address_params
     params.require(:address).permit(:postal_code, :address, :name)
   end
+
+  private
+
+  def address_params
+    params.require(:address).permit(:postal_code, :address, :name)
+  end
+  
 end
