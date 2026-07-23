@@ -1,6 +1,7 @@
 class Public::OrdersController < ApplicationController
+  before_action :require_customer_authentication
+  before_action :check_cart_item_empty, only: [:new]
   before_action :set_order_and_cart_items ,only: [:confirm ,:create]
-  before_action :set_payment_info ,only: [:confirm ,:create]
 
   #注文情報入力画面
   def new
@@ -11,9 +12,9 @@ class Public::OrdersController < ApplicationController
 
   #注文情報確認画面
   def confirm
-    set_order_element
+    set_order_address
 
-    if @order.errors.any?
+    unless @order.valid?
       @addresses = current_customer.addresses
       render :new, status: :unprocessable_entity
       return
@@ -37,6 +38,7 @@ class Public::OrdersController < ApplicationController
       end
 
       @cart_items.destroy_all
+      # raise StandardError, "わざと例外を発生"
     end
 
     redirect_to complete_orders_path
@@ -44,7 +46,7 @@ class Public::OrdersController < ApplicationController
   # save・create処理で例外が発生した場合値をロールバックしこの処理を実行(トランザクション処理)
   # インデントはdef createと同じ位置が正常位置
   rescue ActiveRecord::RecordInvalid
-    flash[:alert] = "注文の作成に失敗しました。"
+    flash[:alert] = "注文に失敗しました。"
     redirect_to new_order_path
   end
 
@@ -74,18 +76,25 @@ class Public::OrdersController < ApplicationController
     )
   end
 
+  # カート内商品が空であるか確認
+  def check_cart_item_empty
+    if current_customer.cart_items.empty?
+      redirect_to items_path
+      return
+    end
+  end
+
+  # confirm、create処理の前にorderとcart_itemsをセット
   def set_order_and_cart_items
     @order = current_customer.orders.new(order_params)
     @cart_items = current_customer.cart_items.includes(:item)
-  end
 
-  def set_payment_info
     @order.shipping_cost = 800
     @order.total_payment = @cart_items.sum(&:calc_sub_total) + @order.shipping_cost
   end
 
   # 郵便番号・住所・宛名をセットする処理
-  def set_order_element
+  def set_order_address
     case params[:order][:select_address]
     when "0"  #ご自身の住所の場合 値の上書き
       @order.postal_code = current_customer.postal_code
