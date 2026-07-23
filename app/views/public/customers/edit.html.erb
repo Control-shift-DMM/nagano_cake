@@ -1,0 +1,101 @@
+<%= form_with model: @customer,
+              url: "/customers/information",
+              method: :patch do |form| %>
+
+  <div class="row mb-3 align-items-center">
+    <div class="col-md-2">
+      <%= form.label :last_name, "氏名", class: "form-label mb-0" %>
+    </div>
+
+    <div class="col-md-5">
+      <%= form.text_field :last_name,
+                          required: true,
+                          class: "form-control",
+                          placeholder: "姓" %>
+    </div>
+
+    <div class="col-md-5">
+      <%= form.text_field :first_name,
+                          required: true,
+                          class: "form-control",
+                          placeholder: "名" %>
+    </div>
+  </div>
+
+<div class="row mb-3 align-items-center">
+    <div class="col-md-2">
+      <%= form.label :last_name, "フリガナ", class: "form-label mb-0" %>
+    </div>
+
+    <div class="col-md-5">
+      <%= form.text_field :last_name_kana,
+                          required: true,
+                          class: "form-control",
+                          placeholder: "セイ" %>
+    </div>
+
+    <div class="col-md-5">
+      <%= form.text_field :first_name_kana,
+                          required: true,
+                          class: "form-control",
+                          placeholder: "メイ" %>
+    </div>
+  </div>
+
+  <div class="row mb-3 align-items-center">
+    <div class="col-md-2">
+      <%= form.label :postal_code, "郵便番号", class: "form-label mb-0" %>
+    </div>
+
+    <div class="col-md-5">
+      <%= form.text_field :postal_code,
+                          required: true,
+                          class: "form-control",
+                          placeholder: "郵便番号" %>
+    </div>
+  </div>
+
+<div class="row mb-3 align-items-center">
+    <div class="col-md-2">
+      <%= form.label :address, "住所", class: "form-label mb-0" %>
+    </div>
+
+    <div class="col-md-5">
+      <%= form.text_field :address,
+                          required: true,
+                          class: "form-control",
+                          placeholder: "住所" %>
+    </div>
+  </div>
+  
+  <div class="row mb-3 align-items-center">
+    <div class="col-md-2">
+      <%= form.label :telephone_number, "電話番号", class: "form-label mb-0" %>
+    </div>
+
+    <div class="col-md-5">
+      <%= form.text_field :telephone_number,
+                          required: true,
+                          class: "form-control",
+                          placeholder: "電話番号" %>
+    </div>
+  </div>
+
+<div class="row mb-3 align-items-center">
+    <div class="col-md-2">
+      <%= form.label :email, "メールアドレス", class: "form-label mb-0" %>
+    </div>
+
+    <div class="col-md-5">
+      <%= form.text_field :email,
+                          required: true,
+                          class: "form-control",
+                          placeholder: "メールアドレス" %>
+    </div>
+  </div>
+  
+  
+  <%= form.submit "編集内容を保存",
+                    class: "btn btn-success px-5" %>
+<% end %>
+
