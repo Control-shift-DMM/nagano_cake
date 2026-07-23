@@ -3,6 +3,19 @@ class Public::CustomersController < ApplicationController
     @customer= Current.account
    end
 
+   def edit
+     @customer= Current.account
+   end
+
+   def update
+     @customer = Current.account
+    if @customer.update(customer_params)
+      redirect_to customers_my_page_path
+    else
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
   private
 
   def customer_params
