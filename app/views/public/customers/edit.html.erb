@@ -22,7 +22,7 @@
     </div>
   </div>
 
-<div class="row mb-3 align-items-center">
+  <div class="row mb-3 align-items-center">
     <div class="col-md-2">
       <%= form.label :last_name, "フリガナ", class: "form-label mb-0" %>
     </div>
@@ -55,7 +55,7 @@
     </div>
   </div>
 
-<div class="row mb-3 align-items-center">
+  <div class="row mb-3 align-items-center">
     <div class="col-md-2">
       <%= form.label :address, "住所", class: "form-label mb-0" %>
     </div>
@@ -81,7 +81,7 @@
     </div>
   </div>
 
-<div class="row mb-3 align-items-center">
+  <div class="row mb-3 align-items-center">
     <div class="col-md-2">
       <%= form.label :email, "メールアドレス", class: "form-label mb-0" %>
     </div>
@@ -97,5 +97,7 @@
   
   <%= form.submit "編集内容を保存",
                     class: "btn btn-success px-5" %>
+
 <% end %>
 
+<%= link_to "退会する", customers_unsubscribe_path, class: "btn btn-danger" %>
