@@ -5,15 +5,23 @@ class Public::CartItemsController < ApplicationController
   end
 
   def update
-    # 数量変更の処理
+    @cart_item = current_customer.cart_items.find(params[:id])
+    if @cart_item.update(cart_item_params)
+      redirect_to cart_items_path, notice: "カート内の商品を更新しました。"
+    else
+      redirect_to cart_items_path, alert: "カート内の商品を更新できませんでした。"
+    end
   end
 
   def destroy
-    # 1件削除の処理
+    @cart_item = current_customer.cart_items.find(params[:id])
+    @cart_item.destroy
+    redirect_to cart_items_path, notice: "カート内の商品を削除しました。"
   end
 
   def destroy_all
-    # 全削除の処理
+    current_customer.cart_items.destroy_all
+    redirect_to cart_items_path, notice: "カート内の商品をすべて削除しました。"
   end
 
   def create
