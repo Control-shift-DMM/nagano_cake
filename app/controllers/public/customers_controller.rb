@@ -1,14 +1,15 @@
 class Public::CustomersController < ApplicationController
-   def show
+  before_action :require_customer_authentication
+  def show
     @customer= Current.account
-   end
+  end
 
-   def edit
-     @customer= Current.account
-   end
+  def edit
+    @customer= Current.account
+  end
 
-   def update
-     @customer = Current.account
+  def update
+    @customer = Current.account
     if @customer.update(customer_params)
       redirect_to customers_my_page_path
     else
@@ -28,7 +29,6 @@ class Public::CustomersController < ApplicationController
       :address,
       :telephone_number,
       :email,
-      :is_active
     )
   end
 end
