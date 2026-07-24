@@ -1,3 +1,11 @@
+<div class="row mb-4">
+  <div class="col-md-4">
+    <h5 class="bg-light px-3 py-2 d-inline-block">
+      会員情報編集
+    </h5>
+  </div>
+</div>
+
 <%= form_with model: @customer,
               url: "/customers/information",
               method: :patch do |form| %>
@@ -7,14 +15,14 @@
       <%= form.label :last_name, "氏名", class: "form-label mb-0" %>
     </div>
 
-    <div class="col-md-5">
+    <div class="col-md-2">
       <%= form.text_field :last_name,
                           required: true,
                           class: "form-control",
                           placeholder: "姓" %>
     </div>
 
-    <div class="col-md-5">
+    <div class="col-md-2">
       <%= form.text_field :first_name,
                           required: true,
                           class: "form-control",
@@ -22,19 +30,19 @@
     </div>
   </div>
 
-<div class="row mb-3 align-items-center">
+  <div class="row mb-3 align-items-center">
     <div class="col-md-2">
       <%= form.label :last_name, "フリガナ", class: "form-label mb-0" %>
     </div>
 
-    <div class="col-md-5">
+    <div class="col-md-2">
       <%= form.text_field :last_name_kana,
                           required: true,
                           class: "form-control",
                           placeholder: "セイ" %>
     </div>
 
-    <div class="col-md-5">
+    <div class="col-md-2">
       <%= form.text_field :first_name_kana,
                           required: true,
                           class: "form-control",
@@ -47,7 +55,7 @@
       <%= form.label :postal_code, "郵便番号", class: "form-label mb-0" %>
     </div>
 
-    <div class="col-md-5">
+    <div class="col-md-2">
       <%= form.text_field :postal_code,
                           required: true,
                           class: "form-control",
@@ -55,12 +63,12 @@
     </div>
   </div>
 
-<div class="row mb-3 align-items-center">
+  <div class="row mb-3 align-items-center">
     <div class="col-md-2">
       <%= form.label :address, "住所", class: "form-label mb-0" %>
     </div>
 
-    <div class="col-md-5">
+    <div class="col-md-6">
       <%= form.text_field :address,
                           required: true,
                           class: "form-control",
@@ -73,7 +81,7 @@
       <%= form.label :telephone_number, "電話番号", class: "form-label mb-0" %>
     </div>
 
-    <div class="col-md-5">
+    <div class="col-md-2">
       <%= form.text_field :telephone_number,
                           required: true,
                           class: "form-control",
@@ -81,12 +89,12 @@
     </div>
   </div>
 
-<div class="row mb-3 align-items-center">
+  <div class="row mb-3 align-items-center">
     <div class="col-md-2">
       <%= form.label :email, "メールアドレス", class: "form-label mb-0" %>
     </div>
 
-    <div class="col-md-5">
+    <div class="col-md-2">
       <%= form.text_field :email,
                           required: true,
                           class: "form-control",
@@ -95,7 +103,17 @@
   </div>
   
   
-  <%= form.submit "編集内容を保存",
-                    class: "btn btn-success px-5" %>
-<% end %>
+  <div class="row mt-4">
+    <div class="offset-md-2 col-md-3">
+      <%= form.submit "編集内容を保存",
+                      class: "btn btn-success px-5" %>
+    </div>
 
+    <div class="offset-md-1 col-md-2">
+      <%= link_to "退会する",
+                  customers_unsubscribe_path,
+                  class: "btn btn-danger px-4" %>
+    </div>
+  </div>
+
+<% end %>
