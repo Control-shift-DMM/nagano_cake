@@ -1,78 +1,98 @@
 <%= render 'error' ,order:@order %>
 <%= render 'flash'%>
-<h1>注文情報入力</h1>
-<%= form_with model:@order ,url:confirm_orders_path do |f| %>
-  <!-- 支払方法 -->
-  <h5>支払方法</h5>
-  <%= f.radio_button :payment_method, Order.payment_methods.key(0) %>
-  <%= f.label :payment_method, Order.payment_methods_i18n[:credit_card] %>
+<div class="container">
+  <h4 class="ms-5 mb-3">注文情報入力</h4>
+  <%= form_with model:@order ,url:confirm_orders_path do |f| %>
+    <!-- 支払方法 -->
+    
+    <h4>支払方法</h4>
+    <div class="ms-5 fs-5 mb-3 form-check">
+      <%= f.radio_button :payment_method, Order.payment_methods.key(0), class: "form-check-input" %>
+      <%= f.label :payment_method_credit_card, Order.payment_methods_i18n[:credit_card],  class: "form-check-label" %><br>
 
-  <%= f.radio_button :payment_method,  Order.payment_methods.key(1) %>
-  <%= f.label :payment_method, Order.payment_methods_i18n[:transfer] %>
+      <%= f.radio_button :payment_method,  Order.payment_methods.key(1), class: "form-check-input" %>
+      <%= f.label :payment_method_transfer, Order.payment_methods_i18n[:transfer],  class: "form-check-label" %>
+    </div>
 
-  <!-- お届け先 -->
-  <h5>お届け先</h5>
+    <!-- お届け先 -->
+    <h4>お届け先</h4>
 
-  <!-- 自分の住所 -->
-  <div>
-    <%= f.radio_button :select_address, 0 %>
-    <%= f.label :select_address_0, "ご自身の住所" %><br>
+    <!-- 自分の住所 -->
+    <div class="ms-5 fs-5 form-check">
+      <%= f.radio_button :select_address, 0 ,class:"form-check-input" %>
+      <%= f.label :select_address_0, "ご自身の住所" ,class:"form-check-label" %><br>
+      <div class="ms-4">
+        <%= current_customer.postal_code %>
+        <%= current_customer.address %><br>
+        <%= current_customer.last_name + current_customer.first_name%>
+      </div>
+    </div>
 
-    <%= current_customer.postal_code %>
-    <%= current_customer.address %><br>
-    <%= current_customer.last_name %>
-    <%= current_customer.first_name %>
-  </div>
+    <br>
 
-  <br>
+    <!-- 登録済み住所 -->
+    <div class="ms-5 fs-5 form-check">
+      <% if @addresses.present? %>
+        <%= f.radio_button :select_address, 1 ,class: "form-check-input" %>
+        <%= f.label :select_address_1, "登録済住所から選択", class:"form-check-label"%><br>
+        <div class="ms-4 ">
+          <%= f.collection_select(
+            :address_id,
+            @addresses,
+            :id,
+            :address_display,
+            {},
+            { class: "form-select w-75 mt-2" }
+            )
+          %>
+        </div>
+      <% else %>
+        <p>登録済み住所がありません。</p>
+      <% end %>
 
-  <!-- 登録済み住所 -->
-  <div>
-    <% if @addresses.present? %>
-      <%= f.radio_button :select_address, 1 %>
-      <%= f.label :select_address_1, "登録済住所から選択" %><br>
+    </div>
 
-      <%= f.collection_select(
-        :address_id,
-        @addresses,
-        :id,
-        :address_display
-        )
-      %>
-    <% else %>
-      <p>登録済み住所がありません。</p>
-    <% end %>
+    <br>
 
-  </div>
+    <!-- 新しい住所 -->
+    <div class="ms-5 fs-5 form-check">
+      <%= f.radio_button :select_address, 2 ,class:"form-check-input" %>
+      <%= f.label :select_address_2, "新しいお届け先", class:"form-check-label" %>
 
-  <br>
+      <table class="ms-4">
+        <tr>
+          <td>郵便番号(ハイフンなし)</td>
+          <td ><%= f.text_field :postal_code ,
+                  class: "mt-2 ms-3 form-control w-50",
+                  size: 30,
+                  placeholder: "0000000" %>
+          </td>
+        </tr>
 
-  <!-- 新しい住所 -->
-  <div>
-    <%= f.radio_button :select_address, 2 %>
-    <%= f.label :select_address_2, "新しいお届け先" %>
+        <tr>
+          <td>住所</td>
+          <td><%= f.text_field :address,
+                  size: 60,
+                  class: "mt-2 ms-3 form-control", 
+                  placeholder: "東京都渋谷区代々木神園町0-0"%>
+          </td>
+        </tr>
 
-    <table>
-      <tr>
-        <td>郵便番号(ハイフンなし)</td>
-        <td><%= f.text_field :postal_code %></td>
-      </tr>
+        <tr>
+          <td>宛名</td>
+          <td><%= f.text_field :name,
+                  size: 30,
+                  class: "mt-2 ms-3 form-control w-50",
+                  placeholder: "令和道子"%>
+          </td>
+        </tr>
+      </table>
+    </div>
 
-      <tr>
-        <td>住所</td>
-        <td><%= f.text_field :address, size: 60 %></td>
-      </tr>
+    <br>
+    <div class="text-center">
+      <%= f.submit "確認画面へ進む" ,class:"btn btn-primary px-5 fs-4 fw-bold"%>
+    </div>
 
-      <tr>
-        <td>宛名</td>
-        <td><%= f.text_field :name %></td>
-      </tr>
-    </table>
-  </div>
-
-  <br>
-
-  <%= f.submit "確認画面へ進む" %>
-
-
-<%end%>
+  <%end%>
+</div>
