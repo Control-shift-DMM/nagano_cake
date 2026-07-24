@@ -26,6 +26,31 @@ class Customer < ApplicationRecord
   validates :password,
             length: { minimum: 6 },
             allow_nil: true
+  
+  validates :last_name,
+          :first_name,
+          format: {
+            with: /\A[^0-9０-９]+\z/,
+            message: "には数字を入力できません"
+          }
+          
+  validates :last_name_kana, :first_name_kana,
+            format: {
+            with: /\A[ァ-ヶー]+\z/,
+            message: "は全角カタカナで入力してください"
+            }
+
+  validates :postal_code,
+            format: {
+            with: /\A\d{7}\z/,
+            message: "は7桁の数字で入力してください"
+            }
+
+  validates :telephone_number,
+            format: {
+            with: /\A\d+\z/,
+            message: "は数字のみ入力してください"
+            }
 
   private
 
