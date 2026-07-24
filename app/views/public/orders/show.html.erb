@@ -35,7 +35,7 @@
         <tbody>
           <tr>
             <td class="table-light fw-bold">商品合計</td>
-            <td><%= @order.order_details.sum(&:calc_sub_total) %></td>
+            <td><%= number_with_delimiter(@order.order_details.sum(&:calc_sub_total)) %></td>
           </tr>
           <tr>
             <td class="table-light fw-bold">配送料</td>
@@ -45,29 +45,31 @@
           </tr>
           <tr>
             <td class="table-light fw-bold">ご請求額</td>
-            <td><%= @order.total_payment %></td>
+            <td><%= number_with_delimiter(@order.total_payment) %></td>
           </tr>
         </tbody>
       </table>
     </div>
   </div>
-  <div class="col-md-8">
-    <h6 class="mb-3">注文内容</h6>
-    <table class="table table-hover table-bordered custom-table align-middle">
-      <tr class="table-light">
-        <th>商品</th>
-        <th>単価(税込)</th>
-        <th>個数</th>
-        <th>小計</th>
-      </tr>
-      <% @order.order_details.each do |detail| %>
-        <tr>
-          <td class="w-50"><%= detail.item.name %></td>
-          <td class="w-25"><%= detail.price %></td>
-          <td><%= detail.amount %></td>
-          <td><%= detail.calc_sub_total %></td>
+  <div class="row mt-4">
+    <div class="col-md-8">
+      <h6 class="mb-3">注文内容</h6>
+      <table class="table table-hover table-bordered custom-table align-middle">
+        <tr class="table-light">
+          <th>商品</th>
+          <th>単価(税込)</th>
+          <th>個数</th>
+          <th>小計</th>
         </tr>
-      <% end %>
-    </table>
+        <% @order.order_details.each do |detail| %>
+          <tr>
+            <td class="w-50"><%= detail.item.name %></td>
+            <td class="w-25"><%= detail.price %></td>
+            <td><%= detail.amount %></td>
+            <td><%= detail.calc_sub_total %></td>
+          </tr>
+        <% end %>
+      </table>
+    </div>
   </div>
 </div>

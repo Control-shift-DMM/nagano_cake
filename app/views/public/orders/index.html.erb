@@ -23,10 +23,10 @@
             <%= detail.item.name %><br>
           <% end %>
         </td>
-        <td><%= order.total_payment %>円</td>
+        <td><%= number_with_delimiter(order.total_payment) %>円</td>
         <td><%= order.status_i18n %></td>
         <td class="text-center "><%= link_to "表示する" , order_path(order) ,class:"btn btn-primary fw-bold"%></td>
-      <tr>
+      </tr>
     <%end%>
   </table>
 </div>
