@@ -11,7 +11,7 @@ class Order < ApplicationRecord
   # 仮想属性の定義とバリデーション設定
   attr_accessor :select_address, :address_id
   validates :payment_method, presence: true
-  validates :select_address, presence: true
+  validates :select_address, presence: true ,on: :confirm
 
   validates :address_id,
             presence: true,
