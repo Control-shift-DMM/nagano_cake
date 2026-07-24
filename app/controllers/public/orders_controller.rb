@@ -14,7 +14,7 @@ class Public::OrdersController < ApplicationController
   def confirm
     set_order_address
 
-    unless @order.valid?
+    unless @order.valid?(:confirm)
       @addresses = current_customer.addresses
       render :new, status: :unprocessable_entity
       return
