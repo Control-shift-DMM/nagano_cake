@@ -1,64 +1,61 @@
-<h2>商品一覧</h2>
+<div class="py-4 px-lg-5">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="h4 d-inline-block bg-light px-4 py-2 mb-0">
+      商品一覧
+    </h1>
 
-<p>
-  <%= link_to "商品を新規登録する", new_admin_item_path %>
-</p>
-
-<%= form_with url: admin_items_path, method: :get do |f| %>
-  <div>
-    <%= f.label :keyword, "商品名検索" %>
-    <%= f.text_field :keyword, value: @keyword %>
-    <%= f.submit "検索" %>
-
-    <% if @keyword.present? %>
-      <%= link_to "検索を解除", admin_items_path %>
-    <% end %>
+    <%= link_to "＋",
+                new_admin_item_path,
+                class: "btn bg-white border rounded-circle shadow d-inline-flex align-items-center justify-content-center fs-4",
+                style: "width: 48px; height: 48px;",
+                aria: { label: "商品を新規登録する" } %>
   </div>
-<% end %>
 
-<table>
-  <thead>
-    <tr>
-      <th>商品ID</th>
-      <th>商品画像</th>
-      <th>商品名</th>
-      <th>税抜価格</th>
-      <th>ジャンル</th>
-      <th>販売ステータス</th>
-    </tr>
-  </thead>
+  <% if @items.any? %>
+    <div class="table-responsive">
+      <table class="table table-hover align-middle">
+        <thead class="table-light">
+          <tr>
+            <th scope="col">商品ID</th>
+            <th scope="col">商品名</th>
+            <th scope="col">税抜価格</th>
+            <th scope="col">ジャンル</th>
+            <th scope="col">ステータス</th>
+          </tr>
+        </thead>
 
-  <tbody>
-    <% @items.each do |item| %>
-      <tr>
-        <td><%= item.id %></td>
+        <tbody>
+          <% @items.each do |item| %>
+            <tr>
+              <td><%= item.id %></td>
 
-        <td>
-          <% if item.image.attached? %>
-            <%= image_tag item.image, size: "80x80" %>
-          <% else %>
-            <%= image_tag "default-image.jpg", size: "80x80" %>
+              <td>
+                <%= link_to item.name,
+                            admin_item_path(item),
+                            class: "fw-semibold text-dark" %>
+              </td>
+
+              <td>
+                <%= number_with_delimiter(item.price) %>円
+              </td>
+
+              <td><%= item.genre.name %></td>
+
+              <td>
+                <% if item.is_active? %>
+                  <span class="fw-semibold text-success">販売中</span>
+                <% else %>
+                  <span class="fw-semibold text-secondary">販売停止中</span>
+                <% end %>
+              </td>
+            </tr>
           <% end %>
-        </td>
-
-        <td>
-          <%= link_to item.name, admin_item_path(item) %>
-        </td>
-
-        <td>
-          <%= number_with_delimiter(item.price) %>円
-        </td>
-
-        <td><%= item.genre.name %></td>
-
-        <td>
-          <%= item.is_active? ? "販売中" : "販売停止中" %>
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<% if @items.empty? %>
-  <p>該当する商品はありません。</p>
-<% end %>
+        </tbody>
+      </table>
+    </div>
+  <% else %>
+    <div class="alert alert-secondary">
+      該当する商品はありません。
+    </div>
+  <% end %>
+</div>

@@ -1,37 +1,94 @@
-<h2>商品詳細</h2>
+<div class="py-4 px-lg-5">
+  <h1 class="h4 d-inline-block bg-light px-4 py-2 mb-5">
+    商品詳細
+  </h1>
 
-<div>
-  <% if @item.image.attached? %>
-    <%= image_tag @item.image, size: "250x250" %>
-  <% else %>
-    <%= image_tag "default-image.jpg", size: "250x250" %>
-  <% end %>
+  <div class="row g-5">
+    <div class="col-md-5">
+      <% if @item.image.attached? %>
+        <%= image_tag @item.image,
+                      class: "img-fluid",
+                      style: "max-height: 320px; object-fit: contain;" %>
+      <% else %>
+        <%= image_tag "default-image.jpg",
+                      class: "img-fluid",
+                      style: "max-height: 320px; object-fit: contain;" %>
+      <% end %>
+    </div>
+
+    <div class="col-md-7">
+      <div class="row mb-3">
+        <div class="col-sm-4 fw-semibold">
+          商品名
+        </div>
+
+        <div class="col-sm-8">
+          <%= @item.name %>
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <div class="col-sm-4 fw-semibold">
+          商品説明
+        </div>
+
+        <div class="col-sm-8">
+          <%= simple_format(@item.introduction, class: "mb-0") %>
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <div class="col-sm-4 fw-semibold">
+          ジャンル
+        </div>
+
+        <div class="col-sm-8">
+          <%= @item.genre.name %>
+        </div>
+      </div>
+
+      <div class="row align-items-baseline mb-3">
+        <div class="col-sm-4 fw-semibold">
+          税込価格<br>
+          <span class="fw-normal">（税抜価格）</span>
+        </div>
+
+        <div class="col-sm-8">
+          <span class="fs-5 fw-semibold">
+            <%= number_with_delimiter(@item.with_tax_price) %>円
+          </span>
+
+          <span class="text-secondary">
+            （<%= number_with_delimiter(@item.price) %>円）
+          </span>
+        </div>
+      </div>
+
+      <div class="row mb-4">
+        <div class="col-sm-4 fw-semibold">
+          販売ステータス
+        </div>
+
+        <div class="col-sm-8">
+          <% if @item.is_active? %>
+            <span class="fw-semibold text-success">
+              販売中
+            </span>
+          <% else %>
+            <span class="fw-semibold text-secondary">
+              販売停止中
+            </span>
+          <% end %>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="offset-sm-4 col-sm-8">
+          <%= link_to "編集する",
+                      edit_admin_item_path(@item),
+                      class: "btn btn-success px-5" %>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
-
-<dl>
-  <dt>商品名</dt>
-  <dd><%= @item.name %></dd>
-
-  <dt>商品説明</dt>
-  <dd><%= simple_format(@item.introduction) %></dd>
-
-  <dt>ジャンル</dt>
-  <dd><%= @item.genre.name %></dd>
-
-  <dt>税抜価格</dt>
-  <dd><%= number_with_delimiter(@item.price) %>円</dd>
-
-  <dt>税込価格</dt>
-  <dd><%= number_with_delimiter(@item.with_tax_price) %>円</dd>
-
-  <dt>販売ステータス</dt>
-  <dd><%= @item.is_active? ? "販売中" : "販売停止中" %></dd>
-</dl>
-
-<p>
-  <%= link_to "編集する", edit_admin_item_path(@item) %>
-</p>
-
-<p>
-  <%= link_to "商品一覧へ戻る", admin_items_path %>
-</p>

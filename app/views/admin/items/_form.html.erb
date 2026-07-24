@@ -1,8 +1,10 @@
 <% if item.errors.any? %>
-  <div>
-    <h3><%= item.errors.count %>件のエラーが発生しました</h3>
+  <div class="alert alert-danger mb-4">
+    <h2 class="h5">
+      <%= item.errors.count %>件のエラーが発生しました
+    </h2>
 
-    <ul>
+    <ul class="mb-0">
       <% item.errors.full_messages.each do |message| %>
         <li><%= message %></li>
       <% end %>
@@ -10,57 +12,132 @@
   </div>
 <% end %>
 
-<%= form_with model: [:admin, item] do |f| %>
-  <div>
-    <%= f.label :image, "商品画像" %>
+<%= form_with model: [:admin, item],
+              local: true do |form| %>
+  <div class="row justify-content-center">
+    <div class="col-lg-9">
+      <div class="row align-items-start mb-3">
+        <div class="col-sm-3">
+          <%= form.label :image,
+                         "商品画像",
+                         class: "col-form-label fw-semibold" %>
+        </div>
 
-    <% if item.persisted? && item.image.attached? %>
-      <div>
-        <%= image_tag item.image, size: "120x120" %>
+        <div class="col-sm-6">
+          <% if item.persisted? && item.image.attached? %>
+            <div class="mb-3">
+              <%= image_tag item.image,
+                            class: "img-fluid border",
+                            style: "max-height: 200px; object-fit: contain;" %>
+            </div>
+          <% end %>
+
+          <%= form.file_field :image,
+                              accept: "image/*",
+                              class: "form-control" %>
+        </div>
       </div>
-    <% end %>
 
-    <%= f.file_field :image, accept: "image/*" %>
-  </div>
+      <div class="row align-items-center mb-3">
+        <div class="col-sm-3">
+          <%= form.label :name,
+                         "商品名",
+                         class: "col-form-label fw-semibold" %>
+        </div>
 
-  <div>
-    <%= f.label :name, "商品名" %>
-    <%= f.text_field :name %>
-  </div>
+        <div class="col-sm-6">
+          <%= form.text_field :name,
+                              placeholder: "商品名",
+                              class: "form-control" %>
+        </div>
+      </div>
 
-  <div>
-    <%= f.label :introduction, "商品説明" %>
-    <%= f.text_area :introduction %>
-  </div>
+      <div class="row mb-3">
+        <div class="col-sm-3">
+          <%= form.label :introduction,
+                         "商品説明",
+                         class: "col-form-label fw-semibold" %>
+        </div>
 
-  <div>
-    <%= f.label :genre_id, "ジャンル" %>
-    <%= f.collection_select(
-          :genre_id,
-          genres,
-          :id,
-          :name,
-          prompt: "選択してください"
-        ) %>
-  </div>
+        <div class="col-sm-6">
+          <%= form.text_area :introduction,
+                             rows: 6,
+                             placeholder: "ここに説明文を記述します",
+                             class: "form-control" %>
+        </div>
+      </div>
 
-  <div>
-    <%= f.label :price, "税抜価格" %>
-    <%= f.number_field :price, min: 0 %>
-    <span>円</span>
-  </div>
+      <div class="row align-items-center mb-3">
+        <div class="col-sm-3">
+          <%= form.label :genre_id,
+                         "ジャンル",
+                         class: "col-form-label fw-semibold" %>
+        </div>
 
-  <div>
-    <%= f.label :is_active, "販売ステータス" %>
+        <div class="col-sm-6">
+          <%= form.collection_select :genre_id,
+                                     genres,
+                                     :id,
+                                     :name,
+                                     { prompt: "選択してください" },
+                                     { class: "form-select" } %>
+        </div>
+      </div>
 
-    <%= f.radio_button :is_active, true %>
-    <%= f.label :is_active_true, "販売中" %>
+      <div class="row align-items-center mb-3">
+        <div class="col-sm-3">
+          <%= form.label :price,
+                         "税抜価格",
+                         class: "col-form-label fw-semibold" %>
+        </div>
 
-    <%= f.radio_button :is_active, false %>
-    <%= f.label :is_active_false, "販売停止中" %>
-  </div>
+        <div class="col-sm-6 d-flex align-items-center">
+          <%= form.number_field :price,
+                                min: 0,
+                                placeholder: "1000",
+                                class: "form-control",
+                                style: "max-width: 320px;" %>
 
-  <div>
-    <%= f.submit %>
+          <span class="ms-2">円</span>
+        </div>
+      </div>
+
+      <div class="row align-items-center mb-4">
+        <div class="col-sm-3">
+          <span class="fw-semibold">
+            販売ステータス
+          </span>
+        </div>
+
+        <div class="col-sm-9">
+          <div class="form-check form-check-inline">
+            <%= form.radio_button :is_active,
+                                  true,
+                                  class: "form-check-input" %>
+
+            <%= form.label :is_active_true,
+                           "販売中",
+                           class: "form-check-label" %>
+          </div>
+
+          <div class="form-check form-check-inline">
+            <%= form.radio_button :is_active,
+                                  false,
+                                  class: "form-check-input" %>
+
+            <%= form.label :is_active_false,
+                           "販売停止中",
+                           class: "form-check-label" %>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="offset-sm-3 col-sm-9">
+          <%= form.submit item.persisted? ? "変更を保存" : "新規登録",
+                          class: "btn btn-success px-5" %>
+        </div>
+      </div>
+    </div>
   </div>
 <% end %>
