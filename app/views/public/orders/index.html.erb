@@ -1,7 +1,7 @@
-注文履歴一覧
-<div>
-  <table>
-    <tr>
+<h4 class="mb-2">注文履歴一覧</h4>
+<div class="mt-4">
+  <table class="table table-hover table-bordered custom-table align-middle">
+    <tr class="table-light">
       <th>注文日</th>
       <th>配送先</th>
       <th>注文商品</th>
@@ -23,9 +23,9 @@
             <%= detail.item.name %><br>
           <% end %>
         </td>
-        <td><%= order.total_payment %></td>
+        <td><%= order.total_payment %>円</td>
         <td><%= order.status_i18n %></td>
-        <td><%= link_to "表示する" , order_path(order)%></td>
+        <td class="text-center "><%= link_to "表示する" , order_path(order) ,class:"btn btn-primary fw-bold"%></td>
       <tr>
     <%end%>
   </table>
