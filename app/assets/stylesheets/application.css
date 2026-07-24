@@ -1,10 +1,149 @@
-/*
- * This is a manifest file that'll be compiled into application.css.
- *
- * With Propshaft, assets are served efficiently without preprocessing steps. You can still include
- * application-wide styles in this file, but keep in mind that CSS precedence will follow the standard
- * cascading order, meaning styles declared later in the document or manifest will override earlier ones,
- * depending on specificity.
- *
- * Consider organizing styles into separate files for maintainability.
- */
+/* ========================================
+   トップ・商品一覧・商品詳細の共通レイアウト
+======================================== */
+
+.public-page-layout {
+  width: 100%;
+}
+
+
+/* ========================================
+   ジャンル検索
+======================================== */
+
+.genre-box {
+  width: 100%;
+}
+
+
+/* ========================================
+   PC表示
+======================================== */
+
+@media (min-width: 992px) {
+
+  /* ジャンル検索を左へ移動 */
+  .genre-column {
+    position: relative;
+    left: -235px;
+  }
+
+  /* 商品一覧・商品詳細を少し左へ移動 */
+  .page-left {
+    position: relative;
+    left: -7px;
+  }
+
+  /* ヘッダー右側のメニューを左へ移動 */
+  .header-menu {
+    position: relative;
+    left: -170px;
+  }
+}
+
+
+/* ========================================
+   トップページ
+======================================== */
+
+.top-main-image {
+  display: block;
+  width: 100%;
+  height: 350px;
+  object-fit: cover;
+}
+
+.top-message {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 55%;
+  padding: 20px;
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0.75);
+  transform: translate(-50%, -50%);
+}
+
+
+/* ========================================
+   商品カード
+======================================== */
+
+.item-card-image {
+  display: block;
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+}
+
+
+
+
+.item-show-image {
+  display: block;
+  width: 100%;
+  max-width: 360px;
+  height: 250px;
+  object-fit: cover;
+
+  position: relative;
+  left: -80px;
+}
+
+/* 商品情報 */
+.item-show-info {
+  padding-left: 0;
+  position: relative;
+  left: -60px;
+}
+
+/* 商品説明 */
+.item-description {
+  max-width: 430px;
+  font-size: 18px;
+  line-height: 1.6;
+}
+
+/* 商品価格 */
+.item-price {
+  font-size: 28px;
+  font-weight: bold;
+}
+
+/* 個数選択 */
+.amount-select {
+  width: 160px;
+}
+
+
+/* ========================================
+   タブレット・スマートフォン
+======================================== */
+
+@media (max-width: 991px) {
+
+  .top-main-image {
+    height: 260px;
+  }
+
+  .top-message {
+    width: 85%;
+    padding: 15px;
+    font-size: 14px;
+  }
+
+  .genre-box {
+    min-height: auto;
+    margin-bottom: 30px;
+  }
+
+  .item-show-image {
+    max-width: 100%;
+    height: 280px;
+    margin-bottom: 30px;
+  }
+
+  .item-show-info {
+    padding-left: 12px;
+  }
+}

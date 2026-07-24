@@ -1,7 +1,7 @@
 <header class="border-bottom py-3">
-  <div class="container">
+  <div class="container-fluid px-4">
     <div class="row align-items-center">
-      <div class="col-md-3">
+      <div class="col-md-3 ps-3">
         <% logo_path =
              if admin_signed_in?
                admin_root_path
@@ -11,29 +11,29 @@
 
         <%= link_to "LOGO",
                     logo_path,
-                    class: "btn btn-outline-dark px-5 py-2" %>
+                    class: "btn btn-outline-dark px-5 py-2 ms-5" %>
       </div>
 
-      <div class="col-md-9">
+      <div class="col-md-9 header-menu">
         <ul class="nav justify-content-end">
           <% if admin_signed_in? %>
             <li class="nav-item">
               <%= link_to "商品一覧",
                           admin_items_path,
-                          class: "btn btn-outline-secondary me-2" %>
+                          class: "btn btn-outline-secondary me-3 px-3" %>
             </li>
 
             <li class="nav-item">
 
               <%= link_to "会員一覧",
                           admin_customers_path,
-                          class: "btn btn-outline-secondary me-2" %>
+                          class: "btn btn-outline-secondary me-3 px-3" %>
             </li>
 
             <li class="nav-item">
               <%= link_to "ジャンル一覧",
                           admin_genres_path,
-                          class: "btn btn-outline-secondary me-2" %>
+                          class: "btn btn-outline-secondary me-3 px-3" %>
             </li>
 
             <li class="nav-item">
@@ -67,7 +67,7 @@
               <%= button_to "ログアウト",
                             destroy_customer_session_path,
                             method: :delete,
-                            class: "btn btn-outline-secondary",
+                            class: "btn btn-outline-secondary px-3",
                             form: { class: "d-inline" } %>
             </li>
 

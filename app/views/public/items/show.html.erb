@@ -1,46 +1,86 @@
-<div class="container my-5">
-  <div class="row">
-    <div class="col-md-5 mb-4">
+<div class="container my-5 public-page-layout page-left">
+  <div class="row align-items-start">
+
+    <!-- ジャンル検索 -->
+    <div class="col-12 col-lg-2 genre-column">
+      <div class="border genre-box">
+        <div class="border-bottom text-center fw-bold py-2">
+          ジャンル検索
+        </div>
+
+        <div class="p-3">
+          <% if @genres.any? %>
+            <% @genres.each do |genre| %>
+              <div class="mb-2">
+                <%= genre.name %>
+              </div>
+            <% end %>
+          <% else %>
+            <p class="mb-0 text-muted">
+              ジャンルはありません
+            </p>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <!-- 商品画像 -->
+    <div class="col-12 col-lg-4 offset-lg-1">
       <% if @item.image.attached? %>
         <%= image_tag @item.image,
-                      class: "img-fluid w-100",
-                      style: "max-height: 400px; object-fit: cover;",
+                      class: "item-show-image",
                       alt: @item.name %>
       <% else %>
         <%= image_tag "default-image.jpg",
-                      class: "img-fluid w-100",
-                      style: "max-height: 400px; object-fit: cover;",
+                      class: "item-show-image",
                       alt: "商品画像なし" %>
       <% end %>
     </div>
 
-    <div class="col-md-7">
-      <h2 class="mb-4">
+    <!-- 商品情報 -->
+    <div class="col-12 col-lg-5 item-show-info">
+      <h2 class="fw-bold mb-4">
         <%= @item.name %>
       </h2>
 
-      <div class="mb-4">
-        <%= simple_format(@item.introduction) %>
-      </div>
+      <p class="item-description mb-5">
+        <%= @item.introduction %>
+      </p>
 
       <div class="mb-4">
-        <span class="fs-4 fw-bold">
+        <span class="item-price">
           ¥<%= number_with_delimiter(@item.with_tax_price) %>
         </span>
-        <span>（税込）</span>
+        <span class="ms-2">（税込）</span>
       </div>
 
-      <% if @item.is_active? %>
-        <p class="text-success fw-bold">販売中</p>
+      <% if @item.is_active %>
+        <p class="text-success fw-bold mb-4">
+          販売中
+        </p>
+
+        <%= form_with model: @cart_item,
+                      url: cart_items_path,
+                      method: :post do |form| %>
+
+          <%= form.hidden_field :item_id, value: @item.id %>
+
+          <div class="d-flex align-items-center gap-4">
+            <%= form.select :amount,
+                            options_for_select(1..10),
+                            { prompt: "個数選択" },
+                            class: "form-select amount-select" %>
+
+            <%= form.submit "カートに入れる",
+                            class: "btn btn-success px-4" %>
+          </div>
+        <% end %>
       <% else %>
-        <p class="text-danger fw-bold">販売停止中</p>
+        <p class="text-danger fw-bold">
+          販売停止中
+        </p>
       <% end %>
-
-      <div class="mt-4">
-        <%= link_to "商品一覧へ戻る",
-                    items_path,
-                    class: "btn btn-outline-secondary" %>
-      </div>
     </div>
+
   </div>
 </div>
