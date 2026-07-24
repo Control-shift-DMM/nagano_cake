@@ -1,6 +1,6 @@
 <div class="container my-5">
   <div class="row">
-    <div class="col-md-10 offset-md-1">
+    <div class="col-md-10 ">
       
       <h2 class="mb-4 text-secondary">配送先登録 / 一覧</h2>
 
@@ -16,16 +16,16 @@
             <div class="row mb-3">
               <%= f.label :address, "住所", class: "col-sm-3 col-form-label font-weight-bold" %>
               <div class="col-sm-9">
-                <%= f.text_field :address, class: "form-control", placeholder: "東京都新宿区..." %>
+                <%= f.text_field :address, class: "form-control", placeholder: "東京都渋谷区々木神園町0-0" %>
               </div>
             </div>
 
             <div class="row mb-3">
               <%= f.label :name, "宛名", class: "col-sm-3 col-form-label font-weight-bold" %>
               <div class="col-sm-4">
-                <%= f.text_field :name, class: "form-control", placeholder: "令和太郎" %>
+                <%= f.text_field :name, class: "form-control", placeholder: "令和道子" %>
               </div>
-              <div class="col-sm-5 text-right">
+              <div class="col-sm-5 d-flex justify-content-end">
                 <%= f.submit "新規登録", class: "btn btn-success px-4" %>
               </div>
             </div>
@@ -49,8 +49,8 @@
                 <td><%= address.postal_code %></td>
                 <td><%= address.address %></td>
                 <td><%= address.name %></td>
-                <td class="text-center">
-                  <%= link_to "編集する", edit_address_path(address), class: "btn btn-primary btn-sm mr-2" %>
+                <td class="d-flex justify-content-center gap-2">
+                  <%= link_to "編集する", edit_address_path(address), class: "btn btn-success btn-sm mr-2" %>
                   <%= button_to "削除する", address_path(address), method: :delete, data: { turbo_confirm: "本当に削除しますか？" }, class: "btn btn-danger btn-sm d-inline-block" %>
                 </td>
               </tr>
