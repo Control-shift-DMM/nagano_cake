@@ -1,10 +1,10 @@
-<div class="container">
-  <div class="row">
+<div class="container my-5">
+  <div class="row g-4">
 
     <!-- ジャンル検索 -->
-    <div class="col-md-3">
+    <div class="col-12 col-md-3">
       <div class="border">
-        <h5 class="border-bottom text-center py-2 mb-0">
+        <h5 class="border-bottom text-center fw-bold py-2 mb-0">
           ジャンル検索
         </h5>
 
@@ -19,12 +19,12 @@
     </div>
 
     <!-- メイン部分 -->
-    <div class="col-md-9">
+    <div class="col-12 col-md-9">
 
       <!-- メイン画像と説明 -->
       <div class="position-relative mb-4">
         <div class="border d-flex align-items-center justify-content-center"
-             style="height: 280px;">
+             style="min-height: 280px;">
           メイン画像
         </div>
 
@@ -43,30 +43,49 @@
         新着商品
       </h2>
 
-      <div class="row">
-        <% 4.times do %>
-          <div class="col-md-3">
-            <div class="mb-4">
-              <div class="border d-flex align-items-center justify-content-center"
-                   style="height: 140px;">
-                商品画像
-              </div>
+      <% if @items.any? %>
+        <div class="row g-4">
+          <% @items.each do |item| %>
+            <div class="col-6 col-lg-3">
+              <%= link_to item_path(item),
+                          class: "text-decoration-none text-dark" do %>
 
-              <p class="fw-bold mt-2 mb-1">
-                商品名
-              </p>
+                <div class="card h-100 border-0">
+                  <% if item.image.attached? %>
+                    <%= image_tag item.image,
+                                  class: "card-img-top",
+                                  style: "height: 160px; object-fit: cover;",
+                                  alt: item.name %>
+                  <% else %>
+                    <%= image_tag "default-image.jpg",
+                                  class: "card-img-top",
+                                  style: "height: 160px; object-fit: cover;",
+                                  alt: "商品画像なし" %>
+                  <% end %>
 
-              <p class="mb-0">
-                ¥0,000
-              </p>
+                  <div class="card-body px-0">
+                    <p class="card-title fw-bold mb-1">
+                      <%= item.name %>
+                    </p>
+
+                    <p class="mb-0">
+                      ¥<%= number_with_delimiter(item.with_tax_price) %>
+                    </p>
+                  </div>
+                </div>
+
+              <% end %>
             </div>
-          </div>
-        <% end %>
-      </div>
+          <% end %>
+        </div>
+      <% else %>
+        <p>現在販売中の商品はありません。</p>
+      <% end %>
 
-      <div class="text-end">
+      <div class="text-end mt-4">
         <%= link_to "全ての商品を見る >", items_path %>
       </div>
+
     </div>
   </div>
 </div>

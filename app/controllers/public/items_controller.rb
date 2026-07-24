@@ -5,7 +5,7 @@ class Public::ItemsController < ApplicationController
              .where(is_active: true)
              .order(:id)
 
-             @genres = Genre.all
+    @genres = Genre.all
   end
 
   def show
