@@ -8,12 +8,13 @@
           ジャンル検索
         </h5>
 
-        <ul class="list-unstyled p-3 mb-0">
-          <li class="mb-2">ケーキ</li>
-          <li class="mb-2">焼き菓子</li>
-          <li class="mb-2">プリン</li>
-          <li>キャンディ</li>
-        </ul>
+        <div class="p-3">
+          <% @genres.each do |genre| %>
+            <div class="mb-2">
+              <%= genre.name %>
+            </div>
+          <% end %>
+        </div>
       </div>
     </div>
 
