@@ -1,7 +1,23 @@
 .custom-table th,
 .custom-table tr,
 .custom-table td {
-  
+
   border-width: 1px;
   border-color: black;
+}
+
+.order-radio-btn input[type="radio"] {
+  transform: scale(0.7);
+}
+
+.w-15 {
+  width: 15%;
+}
+
+.h-68 {
+  height: 68px;
+}
+
+.border-none {
+  border: none;
 }
