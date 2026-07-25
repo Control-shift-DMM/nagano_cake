@@ -1,30 +1,54 @@
-<div class="container my-5">
-  <div class="row">
-    <div class="col-12">
+<div class="container my-5 public-page-layout page-left">
+  <div class="row g-4 align-items-start">
+
+    <!-- ジャンル検索 -->
+    <div class="col-12 col-lg-2 genre-column">
+      <div class="border genre-box">
+        <div class="border-bottom text-center fw-bold py-2">
+          ジャンル検索
+        </div>
+
+        <div class="p-3">
+          <% if @genres.any? %>
+            <% @genres.each do |genre| %>
+              <div class="mb-2">
+                <%= genre.name %>
+              </div>
+            <% end %>
+          <% else %>
+            <p class="mb-0 text-muted">
+              ジャンルはありません
+            </p>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <!-- 商品一覧 -->
+    <div class="col-12 col-lg-10">
       <div class="d-flex align-items-end mb-4">
         <h2 class="mb-0">商品一覧</h2>
-        <span class="ms-3">
+
+        <span class="ms-3 mb-1">
           （全<%= @items.count %>件）
         </span>
       </div>
 
       <% if @items.any? %>
-        <div class="row">
+        <div class="row g-4">
           <% @items.each do |item| %>
-            <div class="col-6 col-md-4 col-lg-3 mb-4">
+            <div class="col-6 col-md-4 col-lg-3">
               <%= link_to item_path(item),
                           class: "text-decoration-none text-dark" do %>
 
                 <div class="card h-100 border-0">
                   <% if item.image.attached? %>
                     <%= image_tag item.image,
-                                  class: "card-img-top",
-                                  style: "height: 180px; object-fit: cover;",
+                                  class: "card-img-top item-card-image",
                                   alt: item.name %>
                   <% else %>
                     <%= image_tag "default-image.jpg",
-                                  class: "card-img-top",
-                                  style: "height: 180px; object-fit: cover;",
+                                  class: "card-img-top item-card-image",
                                   alt: "商品画像なし" %>
                   <% end %>
 
@@ -47,5 +71,6 @@
         <p>現在販売中の商品はありません。</p>
       <% end %>
     </div>
+
   </div>
 </div>

@@ -1,71 +1,90 @@
-<div class="container">
-  <div class="row">
+<div class="container my-5 public-page-layout">
+  <div class="row g-4 align-items-start">
 
     <!-- ジャンル検索 -->
-    <div class="col-md-3">
-      <div class="border">
-        <h5 class="border-bottom text-center py-2 mb-0">
+    <div class="col-12 col-lg-2 genre-column">
+      <div class="border genre-box">
+        <div class="border-bottom text-center fw-bold py-2">
           ジャンル検索
-        </h5>
+        </div>
 
-        <ul class="list-unstyled p-3 mb-0">
-          <li class="mb-2">ケーキ</li>
-          <li class="mb-2">焼き菓子</li>
-          <li class="mb-2">プリン</li>
-          <li>キャンディ</li>
-        </ul>
+        <div class="p-3">
+          <% if @genres.any? %>
+            <% @genres.each do |genre| %>
+              <div class="mb-2">
+                <%= genre.name %>
+              </div>
+            <% end %>
+          <% else %>
+            <p class="mb-0 text-muted">
+              ジャンルはありません
+            </p>
+          <% end %>
+        </div>
       </div>
     </div>
 
-    <!-- メイン部分 -->
-    <div class="col-md-9">
+    <!-- トップページのメイン部分 -->
+    <div class="col-12 col-lg-10">
 
-      <!-- メイン画像と説明 -->
+      <!-- メイン画像 -->
       <div class="position-relative mb-4">
-        <div class="border d-flex align-items-center justify-content-center"
-             style="height: 280px;">
-          メイン画像
-        </div>
+        <%= image_tag "top.image.png",
+                      class: "top-main-image",
+                      alt: "ながのCAKE" %>
 
-        <div class="position-absolute top-50 start-50 translate-middle bg-white border p-4">
-          <p class="mb-0">
-            ようこそ、ながのCAKEへ！<br>
-            このサイトは、ケーキ販売のECサイトになります。<br>
-            会員でない方も商品の閲覧はできますが、<br>
-            購入には会員登録が必要になります。
-          </p>
+        <div class="top-message">
+          <p class="mb-1">ようこそ、ながのCAKEへ！</p>
+          <p class="mb-1">このサイトは、ケーキ販売のECサイトになります。</p>
+          <p class="mb-1">会員でない方も商品の閲覧はできますが、</p>
+          <p class="mb-0">購入には会員登録が必要になります。</p>
         </div>
       </div>
 
       <!-- 新着商品 -->
-      <h2 class="fw-bold mb-4">
-        新着商品
-      </h2>
+      <h2 class="mb-4">新着商品</h2>
 
-      <div class="row">
-        <% 4.times do %>
-          <div class="col-md-3">
-            <div class="mb-4">
-              <div class="border d-flex align-items-center justify-content-center"
-                   style="height: 140px;">
-                商品画像
-              </div>
+      <% if @items.any? %>
+        <div class="row g-4">
+          <% @items.each do |item| %>
+            <div class="col-6 col-md-4 col-lg-3">
+              <%= link_to item_path(item),
+                          class: "text-decoration-none text-dark" do %>
 
-              <p class="fw-bold mt-2 mb-1">
-                商品名
-              </p>
+                <div class="card h-100 border-0">
+                  <% if item.image.attached? %>
+                    <%= image_tag item.image,
+                                  class: "card-img-top item-card-image",
+                                  alt: item.name %>
+                  <% else %>
+                    <%= image_tag "default-image.jpg",
+                                  class: "card-img-top item-card-image",
+                                  alt: "商品画像なし" %>
+                  <% end %>
 
-              <p class="mb-0">
-                ¥0,000
-              </p>
+                  <div class="card-body px-0">
+                    <p class="card-title mb-1">
+                      <%= item.name %>
+                    </p>
+
+                    <p class="mb-0">
+                      ¥<%= number_with_delimiter(item.with_tax_price) %>
+                    </p>
+                  </div>
+                </div>
+
+              <% end %>
             </div>
-          </div>
-        <% end %>
+          <% end %>
+        </div>
+      <% else %>
+        <p>現在販売中の商品はありません。</p>
+      <% end %>
+
+      <div class="text-end mt-4">
+        <%= link_to "全ての商品を見る ＞", items_path %>
       </div>
 
-      <div class="text-end">
-        <%= link_to "全ての商品を見る >", items_path %>
-      </div>
     </div>
   </div>
 </div>
