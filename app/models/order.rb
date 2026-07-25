@@ -10,20 +10,23 @@ class Order < ApplicationRecord
 
   # 仮想属性の定義とバリデーション設定
   attr_accessor :select_address, :address_id
-  validates :payment_method, presence: true
-  validates :select_address, presence: true ,on: :confirm
+  validates :payment_method, presence: { message: "を選択してください" }
+  validates :select_address, presence: { message: "を選択してください" } ,on: :confirm
 
   validates :address_id,
-            presence: true,
+            presence: { message: "を選択してください" },
             if: -> { select_address == "1" }
 
   validates :postal_code,
             :address,
             :name,
-            presence: true,
+            presence: { message: "を入力してください" },
             if: -> { select_address == "2" }
 
   validates :postal_code,
-            format: { with: /\A\d{7}\z/ },
-            allow_blank: true
+             format: {
+             with: /\A\d{7}\z/,
+             message: "は7桁の数字で入力してください"
+             },
+             allow_blank: true
 end
