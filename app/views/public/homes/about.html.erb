@@ -1,9 +1,10 @@
-<div class="container">
+<div class="container about-page">
   <div class="row">
     <div class="col-12 text-center">
-      <h1 class="fw-bold mb-4">About</h1>
 
-      <p class="mb-4">
+      <h1 class="about-title">About</h1>
+
+      <p class="about-text">
         ながのCAKEは全国発送可能なケーキ屋さんです。<br>
         お子様からお年寄りの方までお召し上がりいただけるよう、<br>
         様々なバリエーションをご用意しております。<br>
@@ -11,10 +12,12 @@
         ぜひご注文ください。
       </p>
 
-      <div class="border d-flex align-items-center justify-content-center mx-auto"
-        style="max-width: 700px; height: 300px;">
-        About画像
+      <div class="about-image-box">
+        <%= image_tag "about.jpg",
+                      class: "about-image",
+                      alt: "ながのCAKEのケーキ" %>
       </div>
+
     </div>
   </div>
 </div>
