@@ -23,6 +23,8 @@ class Public::OrdersController < ApplicationController
 
   #サンクスページ
   def complete
+    redirect_to root_path unless session[:order_completed]
+    session.delete(:order_completed)
   end
 
   #注文情報確認画面 → 注文確定処理
@@ -40,7 +42,8 @@ class Public::OrdersController < ApplicationController
       @cart_items.destroy_all
       # raise StandardError, "わざと例外を発生"
     end
-
+    
+    session[:order_completed] = true
     redirect_to complete_orders_path
 
   # save・create処理で例外が発生した場合値をロールバックしこの処理を実行(トランザクション処理)
