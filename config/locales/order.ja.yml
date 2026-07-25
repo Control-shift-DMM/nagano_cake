@@ -1,0 +1,9 @@
+ja:
+  activerecord:
+    attributes:
+      order:
+        payment_method: "支払方法"
+        select_address: "お届け先"
+        postal_code: "郵便番号"
+        address: "住所"
+        name: "宛名"
