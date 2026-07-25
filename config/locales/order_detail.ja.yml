@@ -1,0 +1,7 @@
+ja:
+  activerecord:
+    attributes:
+      order_detail:
+        amount: "数量"
+        making_status: "製作ステータス"
+        price: "購入時価格"

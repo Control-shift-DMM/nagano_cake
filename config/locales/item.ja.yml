@@ -1,0 +1,9 @@
+ja:
+  activerecord:
+    attributes:
+      item:
+        name: "商品名"
+        price: "税抜価格"
+        is_active: "販売ステータス"
+        introduction: "商品説明文"
+        genre: "ジャンル"
