@@ -1,60 +1,87 @@
-注文情報確認
-<div>
-  <table>
-    <thead>
-      <tr>
-        <th>商品名</th>
-        <th>単価(税込)</th>
-        <th>数量</th>
-        <th>小計</th>
-      </tr>
-    </thead>
-    <tbody>     
-      <% @cart_items.each do |cart_item| %>
+<h4 class="w-75 mx-auto">注文情報確認</h4>
+<div class="container">
+  <div class="row">
+    <div class="col-md-8">
+      <table class="table table-bordered custom-table align-middle">
+        <thead>
+          <tr>
+            <th class="table-light fw-normal w-50 h-68 align-middle">商品名</th>
+            <th class="table-light fw-normal align-middle">単価(税込)</th>
+            <th class="table-light fw-normal align-middle">数量</th>
+            <th class="table-light fw-normal align-middle">小計</th>
+          </tr>
+        </thead>
+        <tbody>     
+          <% @cart_items.each do |cart_item| %>
+            <tr>
+              <td>
+                <% if cart_item.item.image.attached? %>
+                  <%= image_tag cart_item.item.image,
+                    style: "height: 50px; object-fit: cover;",
+                    alt: cart_item.item.name %>
+                <% else %>
+                  <%= image_tag "default-image.jpg",
+                    style: "height: 50px; object-fit: cover;",
+                    alt: "商品画像なし" %>
+                <% end %>
+                <%= cart_item.item.name %>
+              </td>
+              <td><%= cart_item.item.with_tax_price %></td>
+              <td><%= cart_item.amount %></td>
+              <td><%= number_with_delimiter(cart_item.calc_sub_total) %> </td>  
+            </tr>
+          <%end%>
+        </tbody>
+      </table>
+    </div>
+
+
+    <div class="col-md-3 ms-3">
+      <table class="table table-bordered custom-table align-middle">
+        <tbody>
+          <tr>
+            <td class="table-light w-50 h-68 align-middle">送料</td>
+            <td><%= @order.shipping_cost %></td>
+          </tr>
+          <tr>
+            <td class="table-light h-68 align-middle">商品合計</td>
+            <td><%= number_with_delimiter(@cart_items.sum(&:calc_sub_total)) %></td>
+          </tr>
+          <tr>
+            <td class="table-light h-68 align-middle">請求金額</td>
+            <td><%= number_with_delimiter(@order.total_payment) %></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="row mt-4">
+    <div class="col-md-9">
+      <table class="table align-middle ">
         <tr>
-          <td><%= cart_item.item.name %></td>
-          <td><%= cart_item.item.with_tax_price %></td>
-          <td><%= cart_item.amount %></td>
-          <td><%= cart_item.calc_sub_total %> </td>  
+          <td class="w-15 fs-4 fw-bold border-none">支払方法</td>
+          <td class="pt-4 border-none fs-5"><%=@order.payment_method_i18n%></td>
         </tr>
-      <%end%>
-    </tbody>
-  </table>
+        <tr>
+          <td class="w-15 fs-4 fw-bold border-none">お届け先</td>
+          <td class="pt-4 border-none fs-5">
+            〒<%= @order.postal_code %>
+            <%= @order.address%><br>
+            <%= @order.name%>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <div class="text-center">
+    <%= form_with model: @order ,url:orders_path do |f| %>
+      <%= f.hidden_field :payment_method %>
+      <%= f.hidden_field :postal_code %>
+      <%= f.hidden_field :address %>
+      <%= f.hidden_field :name %>
+
+      <%= f.submit "注文を確定する" ,class:"btn btn-success fs-4 fw-bold px-5 mt-3" %>
+    <% end %>
+  </div>
 </div>
-
-<div>
-  <table>
-    <tbody>
-      <tr>
-        <td>送料</td>
-        <td><%= @order.shipping_cost %></td>
-      </tr>
-      <tr>
-        <td>商品合計</td>
-        <td><%= @cart_items.sum(&:calc_sub_total)%></td>
-      </tr>
-      <tr>
-        <td>請求金額</td>
-        <td><%= @order.total_payment %></td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-
-支払方法
-<%=@order.payment_method_i18n%>
-
-お届け先
-〒
-<%= @order.postal_code %>
-<%= @order.address%>
-<%= @order.name%>
-
-<%= form_with model: @order ,url:orders_path do |f| %>
-  <%= f.hidden_field :payment_method %>
-  <%= f.hidden_field :postal_code %>
-  <%= f.hidden_field :address %>
-  <%= f.hidden_field :name %>
-
-  <%= f.submit "注文を確定する" %>
-<% end %>
