@@ -1,35 +1,50 @@
-<div class="container py-5">
-  <div class="row justify-content-center">
-    <div class="col-md-6 col-lg-5">
-      <h1 class="h3 mb-4">管理者ログイン</h1>
+<div class="row justify-content-center py-4">
+  <div class="col-lg-9">
+    <h1 class="h4 d-inline-block bg-light px-4 py-2 mb-5">
+      管理者ログイン
+    </h1>
 
-      <%= form_with url: admin_session_path,
-                    scope: :admin,
-                    local: true do |form| %>
-        <div class="mb-3">
+    <%= form_with url: admin_session_path,
+                  scope: :admin,
+                  local: true do |form| %>
+      <div class="row align-items-center mb-3">
+        <div class="col-md-3 text-md-end">
           <%= form.label :email,
                          "メールアドレス",
-                         class: "form-label" %>
+                         class: "col-form-label fw-semibold" %>
+        </div>
+
+        <div class="col-md-7">
           <%= form.email_field :email,
                                required: true,
                                autofocus: true,
                                autocomplete: "username",
+                               placeholder: "sample@example.com",
                                class: "form-control" %>
         </div>
+      </div>
 
-        <div class="mb-4">
+      <div class="row align-items-center mb-4">
+        <div class="col-md-3 text-md-end">
           <%= form.label :password,
                          "パスワード",
-                         class: "form-label" %>
+                         class: "col-form-label fw-semibold" %>
+        </div>
+
+        <div class="col-md-7">
           <%= form.password_field :password,
                                   required: true,
                                   autocomplete: "current-password",
                                   class: "form-control" %>
         </div>
+      </div>
 
-        <%= form.submit "ログイン",
-                        class: "btn btn-primary w-100" %>
-      <% end %>
-    </div>
+      <div class="row">
+        <div class="offset-md-3 col-md-4">
+          <%= form.submit "ログイン",
+                          class: "btn btn-primary px-5" %>
+        </div>
+      </div>
+    <% end %>
   </div>
 </div>

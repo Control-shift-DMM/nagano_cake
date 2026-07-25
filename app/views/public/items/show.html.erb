@@ -4,6 +4,7 @@
     <!-- ジャンル検索 -->
     <div class="col-12 col-lg-2 genre-column">
       <div class="border genre-box">
+
         <div class="border-bottom text-center fw-bold py-2">
           ジャンル検索
         </div>
@@ -21,6 +22,7 @@
             </p>
           <% end %>
         </div>
+
       </div>
     </div>
 
@@ -39,47 +41,74 @@
 
     <!-- 商品情報 -->
     <div class="col-12 col-lg-5 item-show-info">
+
       <h2 class="fw-bold mb-4">
         <%= @item.name %>
       </h2>
 
-      <p class="item-description mb-5">
-        <%= @item.introduction %>
-      </p>
+      <div class="item-description mb-5">
+        <%= simple_format(@item.introduction) %>
+      </div>
 
       <div class="mb-4">
         <span class="item-price">
           ¥<%= number_with_delimiter(@item.with_tax_price) %>
         </span>
-        <span class="ms-2">（税込）</span>
+
+        <span class="ms-2">
+          （税込）
+        </span>
       </div>
 
-      <% if @item.is_active %>
+      <% if @item.is_active? %>
+
         <p class="text-success fw-bold mb-4">
           販売中
         </p>
 
-        <%= form_with model: @cart_item,
-                      url: cart_items_path,
-                      method: :post do |form| %>
+        <% if customer_signed_in? %>
 
-          <%= form.hidden_field :item_id, value: @item.id %>
+          <%= form_with model: @cart_item,
+                        url: cart_items_path,
+                        method: :post,
+                        local: true do |form| %>
 
-          <div class="d-flex align-items-center gap-4">
-            <%= form.select :amount,
-                            options_for_select(1..10),
-                            { prompt: "個数選択" },
-                            class: "form-select amount-select" %>
+            <%= form.hidden_field :item_id, value: @item.id %>
 
-            <%= form.submit "カートに入れる",
-                            class: "btn btn-success px-4" %>
+            <div class="d-flex flex-wrap align-items-center gap-4">
+              <%= form.select :amount,
+                              options_for_select((1..10).to_a),
+                              { prompt: "個数選択" },
+                              class: "form-select amount-select" %>
+
+              <%= form.submit "カートに入れる",
+                              class: "btn btn-success px-4 py-2 fw-bold" %>
+            </div>
+
+          <% end %>
+
+        <% else %>
+
+          <div class="mt-4">
+            <p class="mb-3">
+              カートに商品を追加するにはログインが必要です。
+            </p>
+
+            <%= link_to "ログイン",
+                        new_customer_session_path,
+                        class: "btn btn-success px-4" %>
           </div>
+
         <% end %>
+
       <% else %>
-        <p class="text-danger fw-bold">
+
+        <p class="text-danger fw-bold mt-4">
           販売停止中
         </p>
+
       <% end %>
+
     </div>
 
   </div>

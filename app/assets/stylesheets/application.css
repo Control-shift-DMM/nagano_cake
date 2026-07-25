@@ -1,3 +1,13 @@
+/*
+ * This is a manifest file that'll be compiled into application.css.
+ *
+ * With Propshaft, assets are served efficiently without preprocessing steps.
+ * CSSは後に書かれたものが優先されます。
+ */
+
+@import "public_orders.css";
+
+
 /* ========================================
    トップ・商品一覧・商品詳細の共通レイアウト
 ======================================== */
@@ -89,9 +99,9 @@
 }
 
 .item-show-info {
-  padding-left: 0;
   position: relative;
   left: -60px;
+  padding-left: 0;
 }
 
 .item-description {

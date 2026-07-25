@@ -1,21 +1,39 @@
-<h2>ジャンル編集</h2>
+<div class="py-4 px-lg-5">
+  <h1 class="h4 d-inline-block bg-light px-4 py-2 mb-5">
+    ジャンル編集
+  </h1>
 
-<% if @genre.errors.any? %>
-  <div>
-    <h3><%= @genre.errors.count %>件のエラーが発生しました</h3>
+  <% if @genre.errors.any? %>
+    <div class="alert alert-danger mb-4">
+      <h2 class="h5">
+        <%= @genre.errors.count %>件のエラーが発生しました
+      </h2>
 
-    <ul>
-      <% @genre.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-    </ul>
-  </div>
-<% end %>
+      <ul class="mb-0">
+        <% @genre.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
 
-<%= form_with model: [:admin, @genre] do |f| %>
-  <div>
-    <%= f.label :name, "ジャンル名" %>
-    <%= f.text_field :name %>
-    <%= f.submit "変更を保存" %>
-  </div>
-<% end %>
+  <%= form_with model: [:admin, @genre],
+                local: true,
+                class: "row align-items-center g-3" do |form| %>
+    <div class="col-auto">
+      <%= form.label :name,
+                     "ジャンル名",
+                     class: "col-form-label fw-semibold" %>
+    </div>
+
+    <div class="col-md-4">
+      <%= form.text_field :name,
+                          class: "form-control" %>
+    </div>
+
+    <div class="col-auto">
+      <%= form.submit "変更を保存",
+                      class: "btn btn-success px-4" %>
+    </div>
+  <% end %>
+</div>
