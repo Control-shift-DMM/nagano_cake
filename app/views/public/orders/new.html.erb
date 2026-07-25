@@ -6,7 +6,7 @@
     <!-- 支払方法 -->
     
     <h4>支払方法</h4>
-    <div class="ms-5 fs-5 mb-3 form-check">
+    <div class="ms-5 fs-5 mb-3 form-check order-radio-btn">
       <%= f.radio_button :payment_method, Order.payment_methods.key(0), class: "form-check-input" %>
       <%= f.label :payment_method_credit_card, Order.payment_methods_i18n[:credit_card],  class: "form-check-label" %><br>
 
@@ -18,7 +18,7 @@
     <h4>お届け先</h4>
 
     <!-- 自分の住所 -->
-    <div class="ms-5 fs-5 form-check">
+    <div class="ms-5 fs-5 form-check order-radio-btn">
       <%= f.radio_button :select_address, 0 ,class:"form-check-input" %>
       <%= f.label :select_address_0, "ご自身の住所" ,class:"form-check-label" %><br>
       <div class="ms-4">
@@ -31,7 +31,7 @@
     <br>
 
     <!-- 登録済み住所 -->
-    <div class="ms-5 fs-5 form-check">
+    <div class="ms-5 fs-5 form-check order-radio-btn">
       <% if @addresses.present? %>
         <%= f.radio_button :select_address, 1 ,class: "form-check-input" %>
         <%= f.label :select_address_1, "登録済住所から選択", class:"form-check-label"%><br>
@@ -55,7 +55,7 @@
     <br>
 
     <!-- 新しい住所 -->
-    <div class="ms-5 fs-5 form-check">
+    <div class="ms-5 fs-5 form-check order-radio-btn">
       <%= f.radio_button :select_address, 2 ,class:"form-check-input" %>
       <%= f.label :select_address_2, "新しいお届け先", class:"form-check-label" %>
 
