@@ -1,9 +1,11 @@
 class Public::ItemsController < ApplicationController
   def index
     @items = Item
-    .includes(:genre)
-    .where(is_active: true)
-    .order(:id)
+             .includes(:genre)
+             .where(is_active: true)
+             .order(:id)
+
+    @genres = Genre.all
   end
 
   def show
