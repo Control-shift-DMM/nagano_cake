@@ -7,13 +7,14 @@
 
 @import "public_orders.css";
 
-
 /* ========================================
-   トップ・商品一覧・商品詳細の共通レイアウト
+   共通レイアウト
 ======================================== */
 
 .public-page-layout {
   width: 100%;
+  max-width: 1320px;
+  margin: 0 auto;
 }
 
 
@@ -25,26 +26,48 @@
   width: 100%;
 }
 
+.genre-column {
+  position: relative;
+  left: 0;
+}
+
+/* ノートPC・通常PC */
+@media (min-width: 992px) and (max-width: 1599px) {
+  .genre-column {
+    left: -60px;
+  }
+}
+
+/* 大きいモニター */
+@media (min-width: 1600px) {
+  .genre-column {
+    left: -240px;
+  }
+}
+
+/* スマホ */
+@media (max-width: 991px) {
+  .genre-column {
+    position: static;
+    left: auto;
+    margin-bottom: 30px;
+  }
+}
+
 
 /* ========================================
-   PC表示
+   ヘッダー
 ======================================== */
 
-@media (min-width: 992px) {
+.header-menu {
+  position: static;
+}
 
-  .genre-column {
-    position: relative;
-    left: -235px;
-  }
-
-  .page-left {
-    position: relative;
-    left: -7px;
-  }
-
+/* 大きいモニターのみヘッダーを左へ */
+@media (min-width: 1400px) {
   .header-menu {
     position: relative;
-    left: -170px;
+    left: -100px;
   }
 }
 
@@ -67,7 +90,7 @@
   width: 55%;
   padding: 20px;
   text-align: center;
-  background-color: rgba(255, 255, 255, 0.75);
+  background: rgba(255,255,255,.75);
   transform: translate(-50%, -50%);
 }
 
@@ -77,7 +100,6 @@
 ======================================== */
 
 .item-card-image {
-  display: block;
   width: 100%;
   height: 160px;
   object-fit: cover;
@@ -88,19 +110,18 @@
    商品詳細
 ======================================== */
 
+.page-left {
+  position: static;
+}
+
 .item-show-image {
-  display: block;
   width: 100%;
   max-width: 360px;
   height: 250px;
   object-fit: cover;
-  position: relative;
-  left: -80px;
 }
 
 .item-show-info {
-  position: relative;
-  left: -60px;
   padding-left: 0;
 }
 
@@ -121,12 +142,11 @@
 
 
 /* ========================================
-   Aboutページ
+   About
 ======================================== */
 
 .about-page {
-  padding-top: 55px;
-  padding-bottom: 55px;
+  padding: 55px 0;
 }
 
 .about-title {
@@ -143,13 +163,13 @@
 
 .about-image-box {
   width: 500px;
+  max-width: 100%;
   height: 195px;
   margin: 0 auto;
   overflow: hidden;
 }
 
 .about-image {
-  display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -157,10 +177,18 @@
 
 
 /* ========================================
-   タブレット・スマートフォン
+   タブレット・スマホ
 ======================================== */
 
 @media (max-width: 991px) {
+
+  .public-page-layout {
+    padding: 0 12px;
+  }
+
+  .genre-box {
+    min-height: auto;
+  }
 
   .top-main-image {
     height: 260px;
@@ -172,37 +200,29 @@
     font-size: 14px;
   }
 
-  .genre-box {
-    min-height: auto;
-    margin-bottom: 30px;
-  }
-
   .item-show-image {
     max-width: 100%;
     height: 280px;
     margin-bottom: 30px;
-    left: 0;
   }
 
   .item-show-info {
     padding-left: 12px;
-    left: 0;
   }
 
   .about-page {
-    padding-top: 35px;
-    padding-bottom: 35px;
+    padding: 35px 0;
   }
 
   .about-title {
-    margin-bottom: 25px;
     font-size: 42px;
+    margin-bottom: 25px;
   }
 
   .about-text {
-    margin-bottom: 25px;
     font-size: 16px;
     line-height: 1.5;
+    margin-bottom: 25px;
   }
 
   .about-image-box {
