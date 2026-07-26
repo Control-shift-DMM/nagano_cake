@@ -82,7 +82,7 @@ class Public::OrdersController < ApplicationController
   # カート内商品が空であるか確認
   def check_cart_item_empty
     if current_customer.cart_items.empty?
-      redirect_to cart_items_path alert: "カート内の商品が空です"
+      redirect_to cart_items_path
     end
   end
 
