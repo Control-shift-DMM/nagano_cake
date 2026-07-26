@@ -1,4 +1,5 @@
 class Order < ApplicationRecord
+  before_validation :normalize_postal_code
   belongs_to :customer
   has_many :order_details
   has_many :items, through: :order_details
@@ -29,4 +30,9 @@ class Order < ApplicationRecord
              message: "は7桁の数字で入力してください"
              },
              allow_blank: true
+  
+  private
+  def normalize_postal_code
+    self.postal_code = postal_code.tr("０-９", "0-9") if postal_code.present?
+  end
 end
