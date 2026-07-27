@@ -49,7 +49,6 @@ class Public::OrdersController < ApplicationController
   # save・create処理で例外が発生した場合値をロールバックしこの処理を実行(トランザクション処理)
   # インデントはdef createと同じ位置が正常位置
   rescue ActiveRecord::RecordInvalid
-    flash[:alert] = "注文に失敗しました。"
     redirect_to new_order_path
   end
 

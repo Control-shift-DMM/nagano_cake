@@ -1,5 +1,4 @@
 <%= render 'error' ,order:@order %>
-<%= render 'flash'%>
 <div class="container">
   <h4 class="ms-5 mb-3">注文情報入力</h4>
   <%= form_with model:@order ,url:confirm_orders_path do |f| %>
